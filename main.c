@@ -1,7 +1,4 @@
 #define _POSIX_C_SOURCE 200112L
-#define READY 200
-#define RUNNING 201
-#define RESULT 202
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -15,7 +12,13 @@
 #include "peripherals.h"
 #include "pads.h"
 
-int state = READY;
+enum gameState{
+	READY,
+	RUNNING,
+	RESULT
+};
+
+enum gameState state = RUNNING;
 
 void render(int state){
 	if(state == RUNNING){
@@ -24,9 +27,11 @@ void render(int state){
 		renderText(state);
 	}
 	else if(state == READY){
+		resetBall();
 		renderText(state);
 	}
 	else if(state == RESULT){
+		resetBall();
 		renderText(state);
 	}
 }
@@ -48,6 +53,7 @@ void update(int state){
 
 int main(int argc, char *argv[]) {
 	printf("Welcome to Pong!\n");
+	resetBall();
 	while(true){
 		//Main program loop
 		update(state);
