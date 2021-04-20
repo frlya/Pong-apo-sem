@@ -20,11 +20,19 @@ enum gameState{
 
 enum gameState state = RUNNING;
 
+void init(){
+	resetBall();
+	// set coordinates of pads and ball
+	// initialize window
+	// sets font
+}
+
 void render(int state){
 	if(state == RUNNING){
 		renderBall();
 		renderPads();
 		renderText(state);
+		// if score == max_score { state = RESULT; }
 	}
 	else if(state == READY){
 		resetBall();
@@ -44,18 +52,26 @@ void update(int state){
 		updateBall();
 	}
 	else if(state == READY){
+		// Get information from knobs to start 
 		//WIP
+
 	}
 	else if(state == RESULT){
+		// Score screen, win_sound, led and rgb animation 
 		//WIP
+		state = READY;
 	}
 }
 
 int main(int argc, char *argv[]) {
+	
+	// Init menu screen
+
 	printf("Welcome to Pong!\n");
-	resetBall();
 	while(true){
-		//Main program loop
+		double start = getCurrentTime();
+		// Main program loop
+		// Get input
 		update(state);
 		render(state);
 	}

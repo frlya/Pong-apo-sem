@@ -12,6 +12,13 @@ extern int y;
 extern int xVel;
 extern int yVel;
 
+/*  Why not to consider a struct to represent the ball?
+    typedef struct {
+        int x, y;       // Coordinates of the ball
+        int w, h;       // Width and height of the ball
+    } ball_t;
+*/
+
 void updateBall();
 
 void renderBall();
