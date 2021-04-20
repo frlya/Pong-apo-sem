@@ -20,10 +20,6 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef uint16_t font_bits_t;
 
 /* builtin C-based proportional/fixed font structure*/

@@ -1,5 +1,5 @@
-#ifndef DIMENSIONS
-#define DIMENSIONS
+#ifndef DIMENSIONS_H
+#define DIMENSIONS_H
 
 #define BALL_SIZE 4
 #define BAR_X_OFFSET 8

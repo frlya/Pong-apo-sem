@@ -8,8 +8,8 @@
 #include <unistd.h>
 #include <math.h>
 
-#include "dimensions.h"
 #include "peripherals.h"
+#include "dimensions.h"
 #include "pads.h"
 #include "ball.h"
 
