@@ -1,32 +1,41 @@
 #include "ball.h"
 
-void updateBall(){
-    switch (checkCollision(x, y)){
+void updateBall(ball_t *ball, pads_t *pads){
+    switch (checkCollision(ball->x, ball->y, pads)){
         case V_COLLISION:
-            xVel *= -1;
+            ball->xVel *= -1;
             //This part will be optimized later
-            x += xVel * BASE_SPEED;
-            y += xVel * BASE_SPEED;
+            ball->y += ball->xVel * BASE_SPEED;
             break;
         case H_COLLISION:
-            yVel *= -1;
+            ball->yVel *= -1;
             //This part will be optimized later
-            x += xVel * BASE_SPEED;
-            y += xVel * BASE_SPEED;
+            ball->x += ball->xVel * BASE_SPEED;
+            break;
+        case VH_COLLISION:
+            ball->xVel *= -1;
+            ball->yVel *= -1;
+            
             break;
         default:
-            x += xVel * BASE_SPEED;
-            y += xVel * BASE_SPEED;
+            ball->x += ball->xVel * BASE_SPEED;
+            ball->y += ball->xVel * BASE_SPEED;
             break;
     }
     //WIP
 }
 
-void renderBall(){
-    //WIP
+void renderBall(ball_t *ball){
+    int x = ball->x;
+    int y = ball->y;
+    for(int i = 0; i < BALL_SIZE; i++){
+        for(int j = 0; j < BALL_SIZE; j++){
+            draw_pixel(x + i, y + j, COLOR_WHITE);
+        }   
+    }
 }
 
-void resetBall(){
-    x = START_POS_X;
-    y = START_POS_Y;
+void resetBall(ball_t *ball){
+    ball->x = START_POS_X;
+    ball->y = START_POS_Y;
 }

@@ -8,39 +8,51 @@
 #include <unistd.h>
 #include <math.h>
 
-#include "ball.h"
+#include "dimensions.h"
 #include "peripherals.h"
 #include "pads.h"
+#include "ball.h"
 
 enum gameState{
 	READY,
 	RUNNING,
-	RESULT
+	RESULT,
+	MENU
 };
 
 enum gameState state = RUNNING;
 
+ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
+pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2};
+
 void init(){
-	resetBall();
 	// set coordinates of pads and ball
 	// initialize window
+	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(unsigned short));
+	if(fb == NULL){
+		exit(-1);
+	}
 	// sets font
 }
 
 void render(int state){
+	clearScreen();
 	if(state == RUNNING){
-		renderBall();
-		renderPads();
-		renderText(state);
-		// if score == max_score { state = RESULT; }
+		renderBall(&ball, &pads);
+		renderPads(&pads);
+		//renderText(state);
+		// if(score == max_score){ state = RESULT; }
 	}
 	else if(state == READY){
-		resetBall();
-		renderText(state);
+		resetBall(&ball);
+		//renderText(state);
 	}
 	else if(state == RESULT){
-		resetBall();
-		renderText(state);
+		resetBall(&ball);
+		//renderText(state);
+	}
+	else if(state == MENU){
+		//WIP
 	}
 }
 
@@ -49,7 +61,7 @@ void update(int state){
 		int p1Offset = getPlayerOffset(1);
 		int p2Offset = getPlayerOffset(2);
 		updatePads(p1Offset, p2Offset);
-		updateBall();
+		updateBall(&ball);
 	}
 	else if(state == READY){
 		// Get information from knobs to start 
@@ -61,15 +73,17 @@ void update(int state){
 		//WIP
 		state = READY;
 	}
+	else if(state == MENU){
+		//WIP
+	}
 }
 
 int main(int argc, char *argv[]) {
 	
 	// Init menu screen
-
+	init();
 	printf("Welcome to Pong!\n");
 	while(true){
-		double start = getCurrentTime();
 		// Main program loop
 		// Get input
 		update(state);

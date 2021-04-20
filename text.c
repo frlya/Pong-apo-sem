@@ -15,14 +15,14 @@ void drawText(int x, int y, char *text){
 *----------------------------------------------------
 */
 
-/*
-*   Draws single pixel
-*   Service finction
-*/
-void draw_pixel(int x, int y, unsigned short color) {
-  if (x>=0 && x<480 && y>=0 && y<320) {
-    fb[x+480*y] = color;
+int char_width(int ch) {
+  int width;
+  if (!fdes->width) {
+    width = fdes->maxwidth;
+  } else {
+    width = fdes->width[ch-fdes->firstchar];
   }
+  return width;
 }
 
 /*
@@ -37,6 +37,7 @@ void draw_pixel_big(int x, int y, unsigned short color) {
     }
   }
 }
+
 
 /*
  *  Draws character on the screen.
