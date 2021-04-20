@@ -1,16 +1,21 @@
 #ifndef PERIPHERALS_H
 #define PERIPHERALS_H
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "colors.h"
+#include "dimensions.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-
-unsigned short *fb;         //  Array of pixels
+#include "mzapo_parlcd.h"
 
 int getPlayerOffset(int player);
 
-void draw_pixel(int x, int y, unsigned short color);
+void draw_pixel(int x, int y, unsigned short color, unsigned short **fb);
 
-void clearScreen();
+void clearScreen(unsigned short **fb);
+
+void renderScreenData(unsigned short **fb, unsigned char *parlcdMemBase);
 
 #endif

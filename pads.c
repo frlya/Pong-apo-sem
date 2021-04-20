@@ -4,16 +4,16 @@ void updatePads(int p1Offset, int p2Offset){
     //WIP
 }
 
-void renderPads(pads_t *pads){
+void renderPads(pads_t *pads, unsigned short **fb){
     for(int i = 0; i < PAD_WIDTH; i++){
         for(int j = 0; j < PAD_HEIGHT; j++){
-            draw_pixel(BAR_X_OFFSET + i, pads->p1Pos + j, COLOR_WHITE);
+            draw_pixel(BAR_X_OFFSET + i, pads->p1Pos + j, COLOR_WHITE, fb);
         }
     }
 
     for(int i = 0; i < PAD_WIDTH; i++){
         for(int j = 0; j < PAD_HEIGHT; j++){
-            draw_pixel(SCREEN_WIDTH - BAR_X_OFFSET - i - 1, pads->p2Pos + j, COLOR_WHITE);
+            draw_pixel(SCREEN_WIDTH - BAR_X_OFFSET - i - 1, pads->p2Pos + j, COLOR_WHITE, fb);
         }
     }
 }

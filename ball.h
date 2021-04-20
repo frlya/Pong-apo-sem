@@ -17,9 +17,9 @@ typedef struct {
     int xVel, yVel; // Width and height of the ball
 } ball_t;
 
-void updateBall();
+void updateBall(ball_t *ball, pads_t *pads);
 
-void renderBall();
+void renderBall(ball_t *ball, unsigned short **fb);
 
 void resetBall();
 

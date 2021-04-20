@@ -25,12 +25,12 @@ void updateBall(ball_t *ball, pads_t *pads){
     //WIP
 }
 
-void renderBall(ball_t *ball){
+void renderBall(ball_t *ball, unsigned short **fb){
     int x = ball->x;
     int y = ball->y;
     for(int i = 0; i < BALL_SIZE; i++){
         for(int j = 0; j < BALL_SIZE; j++){
-            draw_pixel(x + i, y + j, COLOR_WHITE);
+            draw_pixel(x + i, y + j, COLOR_WHITE, fb);
         }   
     }
 }

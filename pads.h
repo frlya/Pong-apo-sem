@@ -19,7 +19,7 @@ typedef struct{
 
 void updatePads(int p1Offset, int p2Offset);
 
-void renderPads();
+void renderPads(pads_t *pads, unsigned short **fb);
 
 char checkCollision(int x, int y, pads_t *pads);
 #endif
