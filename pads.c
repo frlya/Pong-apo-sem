@@ -5,16 +5,14 @@ void updatePads(int p1Offset, int p2Offset){
 }
 
 void renderPads(pads_t *pads, unsigned short **fb){
-    for(int i = 0; i < PAD_WIDTH; i++){
-        for(int j = 0; j < PAD_HEIGHT; j++){
-            draw_pixel(BAR_X_OFFSET + i, pads->p1Pos + j, COLOR_WHITE, fb);
-        }
-    }
+    fillRect(BAR_X_OFFSET, pads->p1Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_WHITE, fb);
+    fillRect(SCREEN_WIDTH - BAR_X_OFFSET - PAD_WIDTH - 1, pads->p2Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_WHITE, fb);
+}
 
-    for(int i = 0; i < PAD_WIDTH; i++){
-        for(int j = 0; j < PAD_HEIGHT; j++){
-            draw_pixel(SCREEN_WIDTH - BAR_X_OFFSET - i - 1, pads->p2Pos + j, COLOR_WHITE, fb);
-        }
+void renderCentralLine(unsigned short **fb){
+    int segmentSize = SCREEN_HEIGHT / (CL_SEGMENTS * 2);
+    for(int i = 0; i < CL_SEGMENTS; i++){
+        fillRect(SCREEN_WIDTH / 2 - PAD_WIDTH / 2, 2 * i * segmentSize, CL_WIDTH, segmentSize, COLOR_WHITE, fb);
     }
 }
 

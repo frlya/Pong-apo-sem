@@ -31,6 +31,7 @@ unsigned short *fb;
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
 pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2};
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
+_Bool stateSwitch = true;
 
 void setup(){
 	//Screen data init
@@ -65,6 +66,10 @@ void setup(){
 void render(int state){
 	clearScreen(&fb);
 	if(state == RUNNING){
+		if(stateSwitch){
+			stateSwitch = true;
+			renderCentralLine(&fb);
+		}
 		renderBall(&ball, &fb);
 		renderPads(&pads, &fb);
 		//renderText(state);

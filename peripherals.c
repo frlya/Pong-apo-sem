@@ -28,3 +28,11 @@ void renderScreenData(unsigned short **fb, unsigned char *parlcdMemBase){
     parlcd_write_data(parlcdMemBase, (*fb)[i]);
   }
 }
+
+void fillRect(int x, int y, int width, int height, unsigned short color, unsigned short **fb){
+  for(int i = 0; i < width; i++){
+    for(int j = 0; j < height; j++){
+      draw_pixel(x + i, y + j, color, fb);
+    }   
+  }
+}

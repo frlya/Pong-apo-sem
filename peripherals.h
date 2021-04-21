@@ -18,4 +18,6 @@ void clearScreen(unsigned short **fb);
 
 void renderScreenData(unsigned short **fb, unsigned char *parlcdMemBase);
 
+void fillRect(int x, int y, int width, int height, unsigned short color, unsigned short **fb);
+
 #endif

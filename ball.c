@@ -26,13 +26,7 @@ void updateBall(ball_t *ball, pads_t *pads){
 }
 
 void renderBall(ball_t *ball, unsigned short **fb){
-    int x = ball->x;
-    int y = ball->y;
-    for(int i = 0; i < BALL_SIZE; i++){
-        for(int j = 0; j < BALL_SIZE; j++){
-            draw_pixel(x + i, y + j, COLOR_WHITE, fb);
-        }   
-    }
+    fillRect(ball->x, ball->y, BALL_SIZE, BALL_SIZE, COLOR_WHITE, fb);
 }
 
 void resetBall(ball_t *ball){
