@@ -29,7 +29,7 @@ enum gameState state = RUNNING;
 unsigned char *parlcdMemBase;
 unsigned short *fb;
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
-pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2};
+pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
 _Bool stateSwitch = true;
 
@@ -60,7 +60,7 @@ void setup(){
   	}
 	//Loop timer setup
 	loopDelay.tv_sec = 0;
-  	loopDelay.tv_nsec = 150 * 1000 * 1000;
+  	loopDelay.tv_nsec = 17 * 1000 * 1000;
 }
 
 void render(int state){
@@ -93,7 +93,7 @@ void update(int state){
 	if(state == RUNNING){
 		int p1Offset = getPlayerOffset(1);
 		int p2Offset = getPlayerOffset(2);
-		updatePads(p1Offset, p2Offset);
+		updatePads(&pads, p1Offset, p2Offset);
 		updateBall(&ball, &pads);
 	}
 	else if(state == READY){

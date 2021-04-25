@@ -8,9 +8,8 @@
 #include "pads.h"
 #include "peripherals.h"
 
-#define START_POS_X 300
-#define START_POS_Y 200
-#define BASE_SPEED 4 //Defined as pixels per frame
+#define START_POS_X 240
+#define START_POS_Y 270
 
 typedef struct {
     int x, y;       // Coordinates of the ball
@@ -20,6 +19,8 @@ typedef struct {
 void updateBall(ball_t *ball, pads_t *pads);
 
 void renderBall(ball_t *ball, unsigned short **fb);
+
+char handleCollision(ball_t *ball, pads_t *pads);
 
 void resetBall();
 
