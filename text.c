@@ -29,11 +29,11 @@ int char_width(int ch) {
 *   Adjusts scale of character.
 *   Service function
 */
-void draw_pixel_big(int x, int y, unsigned short color) {
+void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int scale) {
   int i,j;
   for (i=0; i<scale; i++) {
     for (j=0; j<scale; j++) {
-      draw_pixel(x+i, y+j, color);
+      draw_pixel(x+i, y+j, color, fb);
     }
   }
 }
@@ -46,7 +46,7 @@ void draw_pixel_big(int x, int y, unsigned short color) {
  *  char ch              - character or its code from font table
  *  unsigned short color - color of the char      
  */
-void draw_char(int x, int y, char ch, unsigned short color) {
+void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale) {
   int w = char_width(ch);
   const font_bits_t *ptr;
   if ((ch >= fdes->firstchar) && (ch-fdes->firstchar < fdes->size)) {
@@ -61,7 +61,7 @@ void draw_char(int x, int y, char ch, unsigned short color) {
       font_bits_t val = *ptr;
       for (j=0; j<w; j++) {
         if ((val&0x8000)!=0) {
-          draw_pixel_big(x+scale*j, y+scale*i, color);
+          draw_pixel_big(x+scale*j, y+scale*i, color, fb, scale);
         }
         val<<=1;
       }

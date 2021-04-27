@@ -6,12 +6,14 @@
 
 font_descriptor_t *fdes;    //  Pointer to a font descriptor from font_...c
 
-int scale;                  //  Scale of a character 
+int char_width(int ch);
 
 void renderText(int state);
 
-void draw_pixel_big(int x, int y, unsigned short color);
+void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int scale);
 
 void drawText(int x, int y, char *text);
+
+void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale);
 
 #endif

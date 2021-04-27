@@ -16,6 +16,8 @@
 #include "peripherals.h"
 #include "pads.h"
 #include "ball.h"
+#include "text.h"
+#include "font_types.h"
 
 enum gameState{
 	READY,
@@ -24,26 +26,37 @@ enum gameState{
 	MENU
 };
 
-enum gameState state = RUNNING;
+enum gameState state = MENU;
 
+// Initialization of a screen.
 unsigned char *parlcdMemBase;
 unsigned short *fb;
+
+// Initialization of a font
+font_descriptor_t *fdes;
+
+
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
+
 pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
 _Bool stateSwitch = true;
+
+
+int scale;
+
 
 void setup(){
 	//Screen data init
 	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(unsigned short));
   	if(fb == NULL){
-		exit(1);
+		exit(-1);
 	}
 
 	//LCD screen setup
 	parlcdMemBase = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
 	if(parlcdMemBase == NULL){
-		exit(1);
+		exit(-1);
 	}
 	parlcd_hx8357_init(parlcdMemBase);
 
@@ -61,6 +74,10 @@ void setup(){
 	//Loop timer setup
 	loopDelay.tv_sec = 0;
   	loopDelay.tv_nsec = 17 * 1000 * 1000;
+
+	//Font is added
+	fdes = &font_winFreeSystem14x16;
+	scale = 10;
 }
 
 void render(int state){
@@ -84,7 +101,7 @@ void render(int state){
 		//renderText(state);
 	}
 	else if(state == MENU){
-		//WIP
+		printf("Menu\n");
 	}
 	renderScreenData(&fb, parlcdMemBase);
 }
@@ -107,7 +124,7 @@ void update(int state){
 		state = READY;
 	}
 	else if(state == MENU){
-		//WIP
+		
 	}
 }
 
