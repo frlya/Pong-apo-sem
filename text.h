@@ -14,4 +14,6 @@ void drawText(int x, int y, char *text);
 
 void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale, font_descriptor_t *fdes);
 
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short **fb, font_descriptor_t *fdes);
+
 #endif

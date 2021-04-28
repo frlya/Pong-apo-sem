@@ -69,3 +69,20 @@ void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb,
     }
   }
 }
+
+// Draws a string of characters to the screen.
+// int x, y 	- left upper corner of a screen.
+// char* line   - string to draw.
+// scale 		- well... just scale.
+// int kerning  - space between two latters.
+
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short **fb, font_descriptor_t *fdes) {
+	int concatinated = 0;
+	while (*line != '\0')
+	{
+		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, fb, scale, fdes);	
+		concatinated += (char_width(*(line), fdes) + kerning ) * scale;
+		line++;
+	}
+}
+//-----------------------------------------------------------------------------
