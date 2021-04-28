@@ -20,13 +20,20 @@
 #include "font_types.h"
 
 enum gameState{
-	READY,
+	READY = 1,
 	RUNNING,
 	RESULT,
 	MENU
 };
 
-enum gameState state = MENU;
+enum menuStates {
+	BEGIN = 1111, 
+	PONG_HEADER_DONE,
+	MENU_BUTTONS,
+	STARTED
+};
+
+int state = MENU;
 
 // Initialization of a screen.
 unsigned char *parlcdMemBase;
@@ -37,6 +44,8 @@ font_descriptor_t *fdes;
 
 
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
+struct timespec pongDelay = {.tv_sec = 0, .tv_nsec = 500000000};
+struct timespec readDelay = {.tv_sec = 3, .tv_nsec = 0};
 
 pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
@@ -44,7 +53,51 @@ _Bool stateSwitch = true;
 
 
 int scale;
+int stateOfTheScreen = BEGIN;
 
+// Drafts of functions
+//----------------------------------------------------------------------------------
+// Big bad function to try some timing.
+int pongText() {
+	clearScreen(&fb);
+	draw_char(0, 0, 'P', COLOR_WHITE, &fb, scale);
+	renderScreenData(&fb, parlcdMemBase);
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+	draw_char(0+120, 0, 'O', COLOR_WHITE, &fb, scale);
+	renderScreenData(&fb, parlcdMemBase);
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+	draw_char(0 + 240, 0, 'N', COLOR_WHITE, &fb, scale);
+	renderScreenData(&fb, parlcdMemBase);
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+	draw_char(0+360, 0, 'G', COLOR_WHITE, &fb, scale);
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+	renderScreenData(&fb, parlcdMemBase);
+
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
+
+	return PONG_HEADER_DONE;
+}
+
+
+// Drows a string of characters to the screen.
+// int x, y 	- left upper corner of a screen.
+// char* line   - string to draw.
+// scale 		- well... just scale.
+// int kerning  - space between two latters.
+
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning) {
+	int concatinated = 0;
+	while (*line != '\0')
+	{
+		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, &fb, scale);	
+		concatinated += (char_width(*(line)) + kerning ) * scale;
+		line++;
+	}
+	
+	
+}
+//-----------------------------------------------------------------------------
 
 void setup(){
 	//Screen data init
@@ -80,9 +133,10 @@ void setup(){
 	scale = 10;
 }
 
-void render(int state){
+void render(int* state){
 	clearScreen(&fb);
-	if(state == RUNNING){
+	if(*state == RUNNING){
+		printf("Im running baby!");
 		if(stateSwitch){
 			stateSwitch = true;
 			renderCentralLine(&fb);
@@ -92,16 +146,40 @@ void render(int state){
 		//renderText(state);
 		// if(score == max_score){ state = RESULT; }
 	}
-	else if(state == READY){
+	else if(*state == READY){
 		//resetBall(&ball);
 		//renderText(state);
 	}
-	else if(state == RESULT){
+	else if(*state == RESULT){
 		//resetBall(&ball);
 		//renderText(state);
 	}
-	else if(state == MENU){
-		printf("Menu\n");
+	else if(*state == MENU){
+
+		if(stateOfTheScreen == BEGIN) {
+			stateOfTheScreen = pongText();
+		}
+
+		if ( stateOfTheScreen == PONG_HEADER_DONE) {
+			drawStringToTheScreen(50, 170, "Hey Mate!", 4, 0);
+			drawStringToTheScreen(50, 230, "Wanna play some pong? ;)", 2, 0);
+			renderScreenData(&fb, parlcdMemBase);
+			clock_nanosleep(CLOCK_MONOTONIC, 0, &readDelay, NULL);
+			stateOfTheScreen = MENU_BUTTONS;
+		}
+
+		printf("Done!\n");
+
+		if (stateOfTheScreen == MENU_BUTTONS) {
+			// print rectangle scale
+			stateOfTheScreen = STARTED;
+			// print rectangle new game
+		}
+
+		// if start is detected -- then game begins
+		if( stateOfTheScreen == STARTED){
+			*state = RUNNING;
+		}
 	}
 	renderScreenData(&fb, parlcdMemBase);
 }
@@ -134,7 +212,8 @@ int main(int argc, char *argv[]) {
 	while(true){
 		// Main program loop
 		update(state);
-		render(state);
+		printf("State in main: %i\n", state);
+		render(&state);
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 
