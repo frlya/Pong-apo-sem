@@ -22,13 +22,15 @@ typedef struct{
     int state;
 }menu_t;
 
+extern menu_t menu;
+
 //Prints title screen
-void pongText(unsigned short **fb, font_descriptor_t *fdes, menu_t *menu);
+void pongText();
 
-void renderMenu(unsigned short **fb, font_descriptor_t *fdes, menu_t *menu);
+void renderMenu();
 
-void updateMenu(menu_t *menu);
+void updateMenu();
 
-void menuInit(menu_t *menu);
+void menuInit();
 
 #endif

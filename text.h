@@ -4,16 +4,18 @@
 #include "font_types.h"
 #include "peripherals.h"
 
-int char_width(int ch, font_descriptor_t *fdes);
+extern font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
+
+int char_width(int ch);
 
 void renderText(int state);
 
-void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int scale);
+void draw_pixel_big(int x, int y, unsigned short color, int scale);
 
 void drawText(int x, int y, char *text);
 
-void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale, font_descriptor_t *fdes);
+void draw_char(int x, int y, char ch, unsigned short color, int scale);
 
-void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short **fb, font_descriptor_t *fdes);
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning);
 
 #endif

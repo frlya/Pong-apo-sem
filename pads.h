@@ -21,7 +21,7 @@ typedef struct{
 
 void updatePads(pads_t *pads, int p1Offset, int p2Offset);
 
-void renderPads(pads_t *pads, unsigned short **fb);
+void renderPads(pads_t *pads);
 
-void renderCentralLine(unsigned short **fb);
+void renderCentralLine();
 #endif

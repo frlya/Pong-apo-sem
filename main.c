@@ -31,17 +31,11 @@ int state = MENU;
 
 // Initialization of a screen.
 unsigned char *parlcdMemBase;
-unsigned short *fb;
-
-// Initialization of a font
-font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
-
 
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
 
 pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
-menu_t menu;
 _Bool stateSwitch = true;
 
 
@@ -81,19 +75,19 @@ void setup(){
 	scale = 10;
 
 	//Other init
-	menuInit(&menu);
+	menuInit();
 }
 
 void render(int* state){
-	clearScreen(&fb);
+	clearScreen();
 	if(*state == RUNNING){
 		printf("Im running baby!");
 		if(stateSwitch){
 			stateSwitch = true;
-			renderCentralLine(&fb);
+			renderCentralLine();
 		}
-		renderBall(&ball, &fb);
-		renderPads(&pads, &fb);
+		renderBall(&ball);
+		renderPads(&pads);
 		//renderText(state);
 		// if(score == max_score){ state = RESULT; }
 	}
@@ -106,10 +100,10 @@ void render(int* state){
 		//renderText(state);
 	}
 	else if(*state == MENU){
-		renderMenu(&fb, fdes, &menu);
+		renderMenu();
 		//printf("Done!\n");
 	}
-	renderScreenData(&fb, parlcdMemBase);
+	renderScreenData(parlcdMemBase);
 }
 
 void update(int *state){
@@ -130,7 +124,7 @@ void update(int *state){
 		*state = READY;
 	}
 	else if(*state == MENU){
-		updateMenu(&menu);
+		updateMenu();
 		if(menu.state == STARTED){
 			*state = RUNNING;
 		}

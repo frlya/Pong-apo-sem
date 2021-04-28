@@ -10,14 +10,16 @@
 #include "mzapo_regs.h"
 #include "mzapo_parlcd.h"
 
+extern unsigned short *fb;
+
 int getPlayerOffset(int player);
 
-void draw_pixel(int x, int y, unsigned short color, unsigned short **fb);
+void draw_pixel(int x, int y, unsigned short color);
 
-void clearScreen(unsigned short **fb);
+void clearScreen();
 
-void renderScreenData(unsigned short **fb, unsigned char *parlcdMemBase);
+void renderScreenData(unsigned char *parlcdMemBase);
 
-void fillRect(int x, int y, int width, int height, unsigned short color, unsigned short **fb);
+void fillRect(int x, int y, int width, int height, unsigned short color);
 
 #endif

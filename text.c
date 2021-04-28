@@ -1,5 +1,7 @@
 #include "text.h"
 
+font_descriptor_t *fdes;
+
 void renderText(int state){
     //WIP
 }
@@ -15,7 +17,7 @@ void drawText(int x, int y, char *text){
 *----------------------------------------------------
 */
 
-int char_width(int ch, font_descriptor_t *fdes) {
+int char_width(int ch) {
   int width;
   if (!fdes->width) {
     width = fdes->maxwidth;
@@ -29,11 +31,11 @@ int char_width(int ch, font_descriptor_t *fdes) {
 *   Adjusts scale of character.
 *   Service function
 */
-void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int scale) {
+void draw_pixel_big(int x, int y, unsigned short color, int scale) {
   int i,j;
   for (i=0; i<scale; i++) {
     for (j=0; j<scale; j++) {
-      draw_pixel(x+i, y+j, color, fb);
+      draw_pixel(x+i, y+j, color);
     }
   }
 }
@@ -46,8 +48,8 @@ void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int
  *  char ch              - character or its code from font table
  *  unsigned short color - color of the char      
  */
-void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale, font_descriptor_t *fdes){
-  int w = char_width(ch, fdes);
+void draw_char(int x, int y, char ch, unsigned short color, int scale){
+  int w = char_width(ch);
   const font_bits_t *ptr;
   if ((ch >= fdes->firstchar) && (ch-fdes->firstchar < fdes->size)) {
     if (fdes->offset) {
@@ -61,7 +63,7 @@ void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb,
       font_bits_t val = *ptr;
       for (j=0; j<w; j++) {
         if ((val&0x8000)!=0) {
-          draw_pixel_big(x+scale*j, y+scale*i, color, fb, scale);
+          draw_pixel_big(x+scale*j, y+scale*i, color, scale);
         }
         val<<=1;
       }
@@ -76,12 +78,12 @@ void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb,
 // scale 		- well... just scale.
 // int kerning  - space between two latters.
 
-void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short **fb, font_descriptor_t *fdes) {
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning) {
 	int concatinated = 0;
 	while (*line != '\0')
 	{
-		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, fb, scale, fdes);	
-		concatinated += (char_width(*(line), fdes) + kerning ) * scale;
+		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, scale);	
+		concatinated += (char_width(*(line)) + kerning ) * scale;
 		line++;
 	}
 }

@@ -33,8 +33,8 @@ void updateBall(ball_t *ball, pads_t *pads){
     //WIP
 }
 
-void renderBall(ball_t *ball, unsigned short **fb){
-    fillRect(ball->x, ball->y, BALL_SIZE, BALL_SIZE, COLOR_WHITE, fb);
+void renderBall(ball_t *ball){
+    fillRect(ball->x, ball->y, BALL_SIZE, BALL_SIZE, COLOR_WHITE);
 }
 
 void resetBall(ball_t *ball){

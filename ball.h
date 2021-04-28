@@ -18,7 +18,7 @@ typedef struct {
 
 void updateBall(ball_t *ball, pads_t *pads);
 
-void renderBall(ball_t *ball, unsigned short **fb);
+void renderBall(ball_t *ball);
 
 char handleCollision(ball_t *ball, pads_t *pads);
 
