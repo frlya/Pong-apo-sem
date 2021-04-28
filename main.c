@@ -40,7 +40,7 @@ unsigned char *parlcdMemBase;
 unsigned short *fb;
 
 // Initialization of a font
-font_descriptor_t *fdes;
+font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
 
 
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
@@ -60,16 +60,16 @@ int stateOfTheScreen = BEGIN;
 // Big bad function to try some timing.
 int pongText() {
 	clearScreen(&fb);
-	draw_char(0, 0, 'P', COLOR_WHITE, &fb, scale);
+	draw_char(0, 0, 'P', COLOR_WHITE, &fb, scale, fdes);
 	renderScreenData(&fb, parlcdMemBase);
 	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
-	draw_char(0+120, 0, 'O', COLOR_WHITE, &fb, scale);
+	draw_char(0+120, 0, 'O', COLOR_WHITE, &fb, scale, fdes);
 	renderScreenData(&fb, parlcdMemBase);
 	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
-	draw_char(0 + 240, 0, 'N', COLOR_WHITE, &fb, scale);
+	draw_char(0 + 240, 0, 'N', COLOR_WHITE, &fb, scale, fdes);
 	renderScreenData(&fb, parlcdMemBase);
 	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
-	draw_char(0+360, 0, 'G', COLOR_WHITE, &fb, scale);
+	draw_char(0+360, 0, 'G', COLOR_WHITE, &fb, scale, fdes);
 	clock_nanosleep(CLOCK_MONOTONIC, 0, &pongDelay, NULL);
 	renderScreenData(&fb, parlcdMemBase);
 
@@ -90,8 +90,8 @@ void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning) {
 	int concatinated = 0;
 	while (*line != '\0')
 	{
-		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, &fb, scale);	
-		concatinated += (char_width(*(line)) + kerning ) * scale;
+		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, &fb, scale, fdes);	
+		concatinated += (char_width(*(line), fdes) + kerning ) * scale;
 		line++;
 	}
 	

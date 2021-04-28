@@ -15,7 +15,7 @@ void drawText(int x, int y, char *text){
 *----------------------------------------------------
 */
 
-int char_width(int ch) {
+int char_width(int ch, font_descriptor_t *fdes) {
   int width;
   if (!fdes->width) {
     width = fdes->maxwidth;
@@ -46,8 +46,8 @@ void draw_pixel_big(int x, int y, unsigned short color, unsigned short **fb, int
  *  char ch              - character or its code from font table
  *  unsigned short color - color of the char      
  */
-void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale) {
-  int w = char_width(ch);
+void draw_char(int x, int y, char ch, unsigned short color, unsigned short **fb, int scale, font_descriptor_t *fdes){
+  int w = char_width(ch, fdes);
   const font_bits_t *ptr;
   if ((ch >= fdes->firstchar) && (ch-fdes->firstchar < fdes->size)) {
     if (fdes->offset) {
