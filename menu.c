@@ -72,12 +72,15 @@ void updateMenu(){
         }
     }
     else if(menu.state == MENU_BUTTONS){
+        menu.ticker++;
         if (knobPressed == (unsigned char)BLUE_PRESSED) {
-            
-            mB.arr[mB.current].colorBack = menu.color;
-            mB.current++;
-            mB.current %= mB.max;
-            mB.arr[mB.current].colorBack = COLOR_YELLOW;
+                if(menu.ticker == 50) {
+                    mB.arr[mB.current].colorBack = menu.color;
+                    mB.current++;
+                    mB.current %= mB.max;
+                    mB.arr[mB.current].colorBack = COLOR_YELLOW;
+                    menu.ticker = 0;
+            }
         }
 	}
 }
@@ -86,7 +89,7 @@ void menuInit(){
     // Init menu handle
     menu.ticker = 0;
     menu.titleState = 0;
-    menu.state = MENU_BUTTONS;
+    menu.state = BEGIN;
     menu.color = COLOR_WHITE;
 
     // Buttons
