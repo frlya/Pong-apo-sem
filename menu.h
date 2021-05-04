@@ -26,7 +26,8 @@ typedef struct {
 	unsigned char y;
 	unsigned short w;
 	unsigned short h;
-	unsigned short color;
+	unsigned short colorBack;
+	unsigned short colorText;
 	char *text;
 } button_t;
 
