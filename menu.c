@@ -27,10 +27,10 @@ void pongText(){
 void renderButtons() {
     // TODO: Add array of buttons.
     fillRect(b1.x, b1.y, b1.w, b1.h, b1.colorBack);
-    drawStringToTheScreen(b1.x + 10, b1.y + 10, b1.text, 1, 0, b1.colorText);
+    drawStringToTheScreen(b1.x + 10, b1.y + 10, b1.text, 3, 0, b1.colorText);
 
     fillRect(b2.x, b2.y, b2.w, b2.h, b2.colorBack);
-    drawStringToTheScreen(b2.x + 10, b2.y + 10, b2.text, 1, 0, b2.colorText);
+    drawStringToTheScreen(b2.x + 10, b2.y + 10, b2.text, 3, 0, b2.colorText);
 }
 
 void renderMenu(){
@@ -83,8 +83,8 @@ void menuInit(){
 
     // Buttons
     // 150, 170, 200, 60, COLOR_WHITE
-    b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_WHITE, .text = "START"};
-    b2 = (button_t) {.x = 150, .y = 240, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_WHITE, .text = "TEST"};
+    b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "START"};
+    b2 = (button_t) {.x = 150, .y = 240, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "TEST"};
 
     // Menu
     menuButtons = (menuButtons_t) {.current = 0, .max = 2};
