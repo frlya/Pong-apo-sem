@@ -16,10 +16,25 @@ enum menuStates {
 	STARTED
 };
 
-typedef struct{
+typedef struct {
+	unsigned char current;
+	unsigned char max;
+} menuButtons_t;
+
+typedef struct {
+	unsigned char x;
+	unsigned char y;
+	unsigned short w;
+	unsigned short h;
+	unsigned short color;
+	char *text;
+} button_t;
+
+typedef struct {
     unsigned int ticker;
     char titleState;
     int state;
+	unsigned short color;
 }menu_t;
 
 extern menu_t menu;

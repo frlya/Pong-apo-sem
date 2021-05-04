@@ -76,10 +76,10 @@ void drawChar(int x, int y, char ch, unsigned short color, int scale){
 // scale 		- well... just scale.
 // int kerning  - space between two latters.
 
-void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning){
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short color){
 	int concatinated = 0;
 	while (*line != '\0'){
-		drawChar(x + (concatinated), y, *(line), COLOR_WHITE, scale);	
+		drawChar(x + (concatinated), y, *(line), color, scale);	
 		concatinated += (charWidth(*(line)) + kerning ) * scale;
 		line++;
 	}

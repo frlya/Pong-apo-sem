@@ -5,7 +5,9 @@ unsigned char *parlcdMemBase;
 volatile uint32_t *led_line;
 volatile u_int32_t *rgb_led1;
 volatile u_int32_t *rgb_led2;
-volatile u_int32_t *knobs;	  
+volatile u_int32_t *knobs;
+unsigned char knobPressed;
+
 
 int getPlayerOffset(int player){
     int returnVal = 0;

@@ -16,6 +16,6 @@ void drawText(int x, int y, char *text);
 
 void drawChar(int x, int y, char ch, unsigned short color, int scale);
 
-void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning);
+void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short color);
 
 #endif

@@ -147,6 +147,8 @@ int main(int argc, char *argv[]){
 		update(&state);
 		printf("State in main: %i\n", state);
 		render(&state);
+		knobPressed = (*knobs) >> 24;
+		printf("%d", knobPressed);
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 		printf("%X\n", *knobs);
 	}
