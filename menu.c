@@ -37,7 +37,7 @@ void updateMenu(){
             menu.state = MENU_BUTTONS;
         }
     }
-    else if(menu.state == MENU_BUTTONS) {
+    else if(menu.state == MENU_BUTTONS){
 		// print rectangle scale
 		menu.state = STARTED;
 		// print rectangle new game

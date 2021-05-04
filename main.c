@@ -131,7 +131,7 @@ void update(int *state){
 	}
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
 	setup();
 	printf("Welcome to Pong!\n");
 	while(true){
