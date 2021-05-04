@@ -30,7 +30,7 @@ typedef struct {
 typedef struct {
 	unsigned char current;
 	unsigned char max;
-	button_t buttonArray[2];
+	button_t arr[2];
 } menuButtons_t;
 
 typedef struct {

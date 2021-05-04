@@ -2,7 +2,7 @@
 
 button_t b1;
 button_t b2;
-menuButtons_t menuButtons;
+menuButtons_t mB;
 
 menu_t menu;
 
@@ -26,11 +26,16 @@ void pongText(){
 
 void renderButtons() {
     // TODO: Add array of buttons.
-    fillRect(b1.x, b1.y, b1.w, b1.h, b1.colorBack);
-    drawStringToTheScreen(b1.x + 10, b1.y + 10, b1.text, 3, 0, b1.colorText);
+    // fillRect(b1.x, b1.y, b1.w, b1.h, b1.colorBack);
+    // drawStringToTheScreen(b1.x + 10, b1.y + 10, b1.text, 3, 0, b1.colorText);
 
-    fillRect(b2.x, b2.y, b2.w, b2.h, b2.colorBack);
-    drawStringToTheScreen(b2.x + 10, b2.y + 10, b2.text, 3, 0, b2.colorText);
+    // fillRect(b2.x, b2.y, b2.w, b2.h, b2.colorBack);
+    // drawStringToTheScreen(b2.x + 10, b2.y + 10, b2.text, 3, 0, b2.colorText);
+
+    for(int i = 0; i < mB.max; i++){
+        fillRect(mB.arr[i].x, mB.arr[i].y, mB.arr[i].w, mB.arr[i].h, mB.arr[i].colorBack);
+        drawStringToTheScreen(mB.arr[i].x + 10, mB.arr[i].y + 10, mB.arr[i].text, 3, 0, mB.arr[i].colorText);
+    }
 }
 
 void renderMenu(){
@@ -67,12 +72,12 @@ void updateMenu(){
         }
     }
     else if(menu.state == MENU_BUTTONS){
-        if (knobPressed == BLUE_PRESSED) {
-            menuButtons.buttonArray[menuButtons.current].colorBack = menu.color;
-	    printf("Current: %i", menuButtons.current);
-            menuButtons.current++;
-            menuButtons.current %= menuButtons.max;
-            menuButtons.buttonArray[menuButtons.current].colorBack = COLOR_YELLOW;
+        if (knobPressed == (unsigned char)BLUE_PRESSED) {
+            
+            mB.arr[mB.current].colorBack = menu.color;
+            mB.current++;
+            mB.current %= mB.max;
+            mB.arr[mB.current].colorBack = COLOR_YELLOW;
         }
 	}
 }
@@ -81,7 +86,7 @@ void menuInit(){
     // Init menu handle
     menu.ticker = 0;
     menu.titleState = 0;
-    menu.state = BEGIN;
+    menu.state = MENU_BUTTONS;
     menu.color = COLOR_WHITE;
 
     // Buttons
@@ -89,11 +94,5 @@ void menuInit(){
     b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = COLOR_YELLOW, .colorText = COLOR_BLACK, .text = "START"};
     b2 = (button_t) {.x = 150, .y = 240, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "TEST"};
     // Menu
-    //
-    menuButtons.current = 0;
-    menuButtons.max = 2;
-    printf("Good\n");
-    menuButtons.buttonArray[0] = b1;
-    menuButtons.buttonArray[1] = b2;
-    printf("Good\n");
+    mB = (menuButtons_t) {.current = 0, .max = 2, .arr = {b1, b2}};
 }
