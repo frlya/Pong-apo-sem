@@ -11,6 +11,11 @@
 #include "mzapo_parlcd.h"
 
 extern unsigned short *fb;
+unsigned char *parlcdMemBase; // Screen
+volatile uint32_t *led_line;  // Led line
+volatile u_int32_t *rgb_led1; // RGBs
+volatile u_int32_t *rgb_led2; //
+volatile u_int32_t *knobs;    // Knobs
 
 int getPlayerOffset(int player);
 

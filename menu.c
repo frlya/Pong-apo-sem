@@ -4,9 +4,20 @@ menu_t menu;
 
 void pongText(){
     if(menu.titleState > 0) drawChar(0 * 120, 0, 'P', COLOR_WHITE, PONG_TEXT_SCALE);
+    *rgb_led1 = 0xffffffff;
+    *rgb_led2 = 0x00000000;
+    
     if(menu.titleState > 1) drawChar(1 * 120, 0, 'O', COLOR_WHITE, PONG_TEXT_SCALE);
+    *rgb_led1 = 0x00000000;
+    *rgb_led2 = 0xffffffff;
+
     if(menu.titleState > 2) drawChar(2 * 120, 0, 'N', COLOR_WHITE, PONG_TEXT_SCALE);
+    *rgb_led1 = 0xffffffff;
+    *rgb_led2 = 0x00000000;
+
     if(menu.titleState > 3) drawChar(3 * 120, 0, 'G', COLOR_WHITE, PONG_TEXT_SCALE);
+    *rgb_led1 = 0x00000000;
+    *rgb_led2 = 0xffffffff;
 }
 
 void renderMenu(){

@@ -35,13 +35,6 @@ pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIG
 ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
 _Bool stateSwitch = true;
 
-// Peripgerials
-unsigned char *parlcdMemBase; 	// Screen
-volatile uint32_t *led_line;	// Led line	
-volatile u_int32_t *rgb_led1;	// RGBs
-volatile u_int32_t *rgb_led2;	//
-volatile u_int32_t *knobs;		// Knobs
-
 int scale;
 
 void setup(){
@@ -97,7 +90,6 @@ void setup(){
 void render(int* state){
 	clearScreen();
 	if(*state == RUNNING){
-		printf("Im running, baby! ");
 		if(stateSwitch){
 			stateSwitch = true;
 			renderCentralLine();
@@ -151,14 +143,12 @@ int main(int argc, char *argv[]){
 	setup();
 	printf("Welcome to Pong!\n");
 	while(true){
-		*led_line = 0xf0f0f0f0;
-		*rgb_led1 = 0x000FFFFF;
-		*rgb_led1 = 0xFFF00000;
 		// Main program loop
 		update(&state);
 		printf("State in main: %i\n", state);
 		render(&state);
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
+		printf("%X\n", *knobs);
 	}
 
 	printf("See you later!\n");
