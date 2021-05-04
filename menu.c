@@ -68,10 +68,11 @@ void updateMenu(){
     }
     else if(menu.state == MENU_BUTTONS){
         if (knobPressed == BLUE_PRESSED) {
-            (menuButtons.buttonArray[menuButtons.current]).colorBack = menu.color;
+            menuButtons.buttonArray[menuButtons.current].colorBack = menu.color;
+	    printf("Current: %i", menuButtons.current);
             menuButtons.current++;
-            menuButtons.current %= 3;
-            (menuButtons.buttonArray[menuButtons.current]).colorBack = COLOR_YELLOW;
+            menuButtons.current %= menuButtons.max;
+            menuButtons.buttonArray[menuButtons.current].colorBack = COLOR_YELLOW;
         }
 	}
 }
@@ -80,7 +81,7 @@ void menuInit(){
     // Init menu handle
     menu.ticker = 0;
     menu.titleState = 0;
-    menu.state = MENU_BUTTONS;
+    menu.state = BEGIN;
     menu.color = COLOR_WHITE;
 
     // Buttons
@@ -88,5 +89,11 @@ void menuInit(){
     b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = COLOR_YELLOW, .colorText = COLOR_BLACK, .text = "START"};
     b2 = (button_t) {.x = 150, .y = 240, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "TEST"};
     // Menu
-    menuButtons = (menuButtons_t) {.current = 0, .max = 2, .buttonArray = {b1, b2}};
+    //
+    menuButtons.current = 0;
+    menuButtons.max = 2;
+    printf("Good\n");
+    menuButtons.buttonArray[0] = b1;
+    menuButtons.buttonArray[1] = b2;
+    printf("Good\n");
 }

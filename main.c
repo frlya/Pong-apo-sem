@@ -82,7 +82,7 @@ void setup(){
 	rgb_led1 = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_LED_RGB1_o);
 	rgb_led2 = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_LED_RGB2_o);
 	knobs = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_KNOBS_8BIT_o);
-
+	printf("Good\n");
 	//Other init
 	menuInit();
 }
@@ -148,6 +148,7 @@ int main(int argc, char *argv[]){
 		render(&state);
 
 		knobPressed = (*knobs) >> 24;
+		printf("knob pressed: %d\n", knobPressed);
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 
