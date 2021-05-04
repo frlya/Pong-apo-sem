@@ -53,7 +53,7 @@ void setup(){
 	if(parlcdMemBase == NULL){
 		exit(-1);
 	}
-	parlcd_hx8357_init(parlcdMemBase);
+	//parlcd_hx8357_init(parlcdMemBase);
 
 	//Clear the screen
 	parlcd_write_cmd(parlcdMemBase, 0x2c);
