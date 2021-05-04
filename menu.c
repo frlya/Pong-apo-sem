@@ -74,7 +74,7 @@ void updateMenu(){
     else if(menu.state == MENU_BUTTONS){
         menu.ticker++;
         if (knobPressed == (unsigned char)BLUE_PRESSED) {
-                if(menu.ticker == 50) {
+                if(menu.ticker > 4) {
                     mB.arr[mB.current].colorBack = menu.color;
                     mB.current++;
                     mB.current %= mB.max;
