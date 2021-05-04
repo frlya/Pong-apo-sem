@@ -88,8 +88,8 @@ void render(int* state){
 		}
 		renderBall(&ball);
 		renderPads(&pads);
-		//renderText(state);
-		// if(score == max_score){ state = RESULT; }
+		renderText(state);
+		//if(score == max_score){ state = RESULT; }
 	}
 	else if(*state == READY){
 		//resetBall(&ball);

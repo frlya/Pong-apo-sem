@@ -6,10 +6,6 @@ void renderText(int state){
     //WIP
 }
 
-void drawText(int x, int y, char *text){
-    //WIP
-}
-
 
 /*
 *----------------------------------------------------
@@ -17,7 +13,7 @@ void drawText(int x, int y, char *text){
 *----------------------------------------------------
 */
 
-int char_width(int ch) {
+int charWidth(int ch) {
   int width;
   if (!fdes->width) {
     width = fdes->maxwidth;
@@ -31,7 +27,7 @@ int char_width(int ch) {
 *   Adjusts scale of character.
 *   Service function
 */
-void draw_pixel_big(int x, int y, unsigned short color, int scale) {
+void drawPixelBig(int x, int y, unsigned short color, int scale) {
   int i,j;
   for (i=0; i<scale; i++) {
     for (j=0; j<scale; j++) {
@@ -48,8 +44,8 @@ void draw_pixel_big(int x, int y, unsigned short color, int scale) {
  *  char ch              - character or its code from font table
  *  unsigned short color - color of the char      
  */
-void draw_char(int x, int y, char ch, unsigned short color, int scale){
-  int w = char_width(ch);
+void drawChar(int x, int y, char ch, unsigned short color, int scale){
+  int w = charWidth(ch);
   const font_bits_t *ptr;
   if ((ch >= fdes->firstchar) && (ch-fdes->firstchar < fdes->size)) {
     if (fdes->offset) {
@@ -63,7 +59,7 @@ void draw_char(int x, int y, char ch, unsigned short color, int scale){
       font_bits_t val = *ptr;
       for (j=0; j<w; j++) {
         if ((val&0x8000)!=0) {
-          draw_pixel_big(x+scale*j, y+scale*i, color, scale);
+          drawPixelBig(x+scale*j, y+scale*i, color, scale);
         }
         val<<=1;
       }
@@ -82,8 +78,8 @@ void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning) {
 	int concatinated = 0;
 	while (*line != '\0')
 	{
-		draw_char(x + (concatinated), y, *(line), COLOR_WHITE, scale);	
-		concatinated += (char_width(*(line)) + kerning ) * scale;
+		drawChar(x + (concatinated), y, *(line), COLOR_WHITE, scale);	
+		concatinated += (charWidth(*(line)) + kerning ) * scale;
 		line++;
 	}
 }

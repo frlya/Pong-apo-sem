@@ -3,10 +3,10 @@
 menu_t menu;
 
 void pongText(){
-    if(menu.titleState > 0) draw_char(0 * 120, 0, 'P', COLOR_WHITE, PONG_TEXT_SCALE);
-    if(menu.titleState > 1) draw_char(1 * 120, 0, 'O', COLOR_WHITE, PONG_TEXT_SCALE);
-    if(menu.titleState > 2) draw_char(2 * 120, 0, 'N', COLOR_WHITE, PONG_TEXT_SCALE);
-    if(menu.titleState > 3) draw_char(3 * 120, 0, 'G', COLOR_WHITE, PONG_TEXT_SCALE);
+    if(menu.titleState > 0) drawChar(0 * 120, 0, 'P', COLOR_WHITE, PONG_TEXT_SCALE);
+    if(menu.titleState > 1) drawChar(1 * 120, 0, 'O', COLOR_WHITE, PONG_TEXT_SCALE);
+    if(menu.titleState > 2) drawChar(2 * 120, 0, 'N', COLOR_WHITE, PONG_TEXT_SCALE);
+    if(menu.titleState > 3) drawChar(3 * 120, 0, 'G', COLOR_WHITE, PONG_TEXT_SCALE);
 }
 
 void renderMenu(){

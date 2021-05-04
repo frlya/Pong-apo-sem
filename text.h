@@ -6,15 +6,15 @@
 
 extern font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
 
-int char_width(int ch);
-
 void renderText(int state);
 
-void draw_pixel_big(int x, int y, unsigned short color, int scale);
+int charWidth(int ch);
+
+void drawPixelBig(int x, int y, unsigned short color, int scale);
 
 void drawText(int x, int y, char *text);
 
-void draw_char(int x, int y, char ch, unsigned short color, int scale);
+void drawChar(int x, int y, char ch, unsigned short color, int scale);
 
 void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning);
 
