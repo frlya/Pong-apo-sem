@@ -19,6 +19,7 @@ enum menuStates {
 typedef struct {
 	unsigned char current;
 	unsigned char max;
+	button_t *buttonArray;
 } menuButtons_t;
 
 typedef struct {

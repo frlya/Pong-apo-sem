@@ -61,16 +61,18 @@ void updateMenu(){
     }
     else if(menu.state == PONG_HEADER_DONE){
         menu.ticker++;
-        if(menu.ticker == 150){
+        if(menu.ticker == 100){
             menu.ticker = 0;
             menu.state = MENU_BUTTONS;
         }
     }
     else if(menu.state == MENU_BUTTONS){
-    
-		// print rectangle scale
-        // True
-        // print rectangle new game
+        if (knobPressed == BLUE_PRESSED) {
+            (menuButtons.buttonArray[menuButtons.current]).colorBack = menu.color;
+            menuButtons.current++;
+            menuButtons.current %= 3;
+            (menuButtons.buttonArray[menuButtons.current]).colorBack = COLOR_YELLOW;
+        }
 	}
 }
 
@@ -83,10 +85,8 @@ void menuInit(){
 
     // Buttons
     // 150, 170, 200, 60, COLOR_WHITE
-    b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "START"};
+    b1 = (button_t) { .x = 150, .y = 170, .w = 200, .h = 60, .colorBack = COLOR_YELLOW, .colorText = COLOR_BLACK, .text = "START"};
     b2 = (button_t) {.x = 150, .y = 240, .w = 200, .h = 60, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "TEST"};
-
     // Menu
-    menuButtons = (menuButtons_t) {.current = 0, .max = 2};
+    menuButtons = (menuButtons_t) {.current = 0, .max = 2, .buttonArray = {b1, b2}};
 }
-
