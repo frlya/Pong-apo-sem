@@ -5,6 +5,7 @@ button_t b2;
 menuButtons_t mB;
 
 menu_t menu;
+int *state_c;
 
 void pongText(){
     if(menu.titleState > 0) { 
@@ -82,10 +83,23 @@ void updateMenu(){
                     menu.ticker = 0;
             }
         }
+	if(knobPressed == RED_PRESSED){
+		switch(mB.current)
+		{
+			case 0:
+			  *state_c = 2; //Running
+		  	  break;
+			case 1:
+			  printf("Test\n");
+			  break;	  
+		}
+	}
 	}
 }
 
-void menuInit(){
+void menuInit(int *st){
+    state_c = st;
+    printf("Good done bettter\n");
     // Init menu handle
     menu.ticker = 0;
     menu.titleState = 0;

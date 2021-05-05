@@ -84,7 +84,7 @@ void setup(){
 	knobs = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_KNOBS_8BIT_o);
 	printf("Good\n");
 	//Other init
-	menuInit();
+	menuInit(&state);
 }
 
 void render(int* state){
@@ -96,7 +96,7 @@ void render(int* state){
 		}
 		renderBall(&ball);
 		renderPads(&pads);
-		renderText(state);
+		//renderText(state);
 		//if(score == max_score){ state = RESULT; }
 	}
 	else if(*state == READY){
