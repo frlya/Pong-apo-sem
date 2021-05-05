@@ -15,10 +15,13 @@ void addPointToPlayer(int player) {
         scoreTable.pl1++;
          break;
     case 2:
-        scoreTable.pl2++;
-        unsigned short tmp = *led_line;
-        tmp <<= 1;
-        *led_line |= tmp;
+        if((++scoreTable.pl2) == 1) {
+		 *led_line = 1;
+	} else {
+        	unsigned short tmp = *led_line;
+        	tmp <<= 1;
+        	*led_line |= tmp;
+	}
         break;
     }
 }

@@ -7,7 +7,7 @@ CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 
 SOURCES = ball.c pads.c peripherals.c menu.c main.c mzapo_phys.c mzapo_parlcd.c
-SOURCES += font_prop14x16.c font_rom8x16.c text.c
+SOURCES += font_prop14x16.c font_rom8x16.c text.c score.c
 TARGET_EXE = pong
 #TARGET_IP ?= 192.168.202.207
 ifeq ($(TARGET_IP),)

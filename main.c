@@ -143,6 +143,10 @@ void update(int *state){
 
 int main(int argc, char *argv[]){
 	setup();
+
+	//
+	*led_line = 0;
+	//
 	printf("Welcome to Pong!\n");
 	while(true){
 		// Main program loop
