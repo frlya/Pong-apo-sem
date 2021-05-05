@@ -1,12 +1,40 @@
 #include "pads.h"
+uint8_t previousKnobP1;
+u_int8_t currentKnobP1;
+
+uint8_t previousKnobP2;
+u_int8_t currentKnobP2;
+
+void initHandle()
+{
+    previousKnobP1 = redKnob;
+    currentKnobP1 = redKnob;
+
+    previousKnobP1 = blueKnob;
+    currentKnobP2 = blueKnob;
+}
 
 void updatePads(pads_t *pads, int p1Offset, int p2Offset){
     //Simulating pads movement, will be replaced by controlled movement later
+    // P1
+     currentKnobP1 = redKnob;
     if((pads->p1Pos < 4) || (pads->p1Pos > SCREEN_HEIGHT - PAD_HEIGHT - 4)){
-        pads->p1Vel *= -1;
-    }
-    pads->p1Pos += 2 * pads->p1Vel;
+        //pads->p1Vel *= -1;
+    } else {
 
+        char check = previousKnobP1 - currentKnobP2;
+            if (check < 0) {
+                pads->p1Pos += 1;
+            }
+            if (check > 0) {
+                pads->p1Pos -= 1;
+            }
+    }
+
+    previousKnobP1 = currentKnobP1;
+    // pads->p1Pos += 2 * pads->p1Vel;
+
+    // P2
     if((pads->p2Pos < 4) || (pads->p2Pos > SCREEN_HEIGHT - PAD_HEIGHT - 4)){
         pads->p2Vel *= -1;
     }

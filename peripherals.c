@@ -7,7 +7,9 @@ volatile u_int32_t *rgb_led1;
 volatile u_int32_t *rgb_led2;
 volatile u_int32_t *knobs;
 unsigned char knobPressed;
-
+u_int8_t redKnob;
+u_int8_t greenKnob;
+u_int8_t blueKnob;
 
 int getPlayerOffset(int player){
     int returnVal = 0;

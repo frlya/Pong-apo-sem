@@ -134,6 +134,7 @@ void update(int *state){
 	else if(*state == MENU){
 		updateMenu();
 		if(menu.state == STARTED){
+			initHandle();
 			*state = RUNNING;
 		}
 	}
@@ -149,6 +150,14 @@ int main(int argc, char *argv[]){
 
 		knobPressed = (*knobs) >> 24;
 		printf("knob pressed: %d\n", knobPressed);
+
+		redKnob = (*knobs >> 16) & 0xFF;
+		greenKnob = (*knobs >> 8) & 0xFF;
+		blueKnob = *knobs & 0xFF;
+
+		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);
+		printf("Raw line: %X\n", *knobs);
+
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 

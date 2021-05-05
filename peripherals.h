@@ -16,6 +16,11 @@ volatile uint32_t *led_line;  // Led line
 volatile u_int32_t *rgb_led1; // RGBs
 volatile u_int32_t *rgb_led2; //
 volatile u_int32_t *knobs;    // Knobs
+u_int8_t redKnob;
+u_int8_t greenKnob;
+u_int8_t blueKnob;
+
+
 unsigned char knobPressed;
 
 enum knobsPressed {

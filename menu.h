@@ -49,6 +49,6 @@ void renderMenu();
 
 void updateMenu();
 
-void menuInit();
+void menuInit(int *st);
 
 #endif

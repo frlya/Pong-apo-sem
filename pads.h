@@ -12,6 +12,12 @@
 #define L_EXIT 104
 #define R_EXIT 105
 
+uint8_t previousKnobP1;
+u_int8_t currentKnobP1;
+
+uint8_t previousKnobP2;
+u_int8_t currentKnobP2;
+
 typedef struct{
     int p1Pos;
     int p2Pos;
@@ -24,4 +30,7 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset);
 void renderPads(pads_t *pads);
 
 void renderCentralLine();
+
+void initHandle();
+
 #endif
