@@ -96,7 +96,7 @@ void render(int* state){
 		}
 		renderBall(&ball);
 		renderPads(&pads);
-		//renderText(state);
+		renderText(state);
 		//if(score == max_score){ state = RESULT; }
 	}
 	else if(*state == READY){
@@ -134,7 +134,6 @@ void update(int *state){
 	else if(*state == MENU){
 		updateMenu();
 		if(menu.state == STARTED){
-			initHandle();
 			*state = RUNNING;
 		}
 	}
@@ -149,18 +148,13 @@ int main(int argc, char *argv[]){
 		render(&state);
 
 		knobPressed = (*knobs) >> 24;
-		printf("knob pressed: %d\n", knobPressed);
-
 		redKnob = (*knobs >> 16) & 0xFF;
 		greenKnob = (*knobs >> 8) & 0xFF;
 		blueKnob = *knobs & 0xFF;
+		
+		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		printf("Raw line: %X\n", *knobs);
 
-		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);
-		printf("Raw line: %X\n", *knobs);
-
+		printf("knob pressed: %d\n", knobPressed);
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
-
-	printf("See you later!\n");
-	return 0;
 }
