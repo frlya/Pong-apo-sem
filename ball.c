@@ -18,10 +18,12 @@ void updateBall(ball_t *ball, pads_t *pads){
             //position is udpated in the handleCollision function
             break;
         case L_EXIT:
+            addPointToPlayer(2);
             resetBall(ball);
             //WIP
             break;
         case R_EXIT:
+            addPointToPlayer(1);
             resetBall(ball);
             //WIP
             break;

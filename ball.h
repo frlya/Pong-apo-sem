@@ -7,6 +7,7 @@
 #include "mzapo_regs.h"
 #include "pads.h"
 #include "peripherals.h"
+#include "score.h"
 
 #define START_POS_X 240
 #define START_POS_Y 270

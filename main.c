@@ -19,6 +19,7 @@
 #include "text.h"
 #include "font_types.h"
 #include "menu.h"
+#include "score.h"
 
 enum gameState{
 	READY = 1,
@@ -96,7 +97,7 @@ void render(int* state){
 		}
 		renderBall(&ball);
 		renderPads(&pads);
-		renderText(state);
+		//renderText(state);
 		//if(score == max_score){ state = RESULT; }
 	}
 	else if(*state == READY){
@@ -134,6 +135,7 @@ void update(int *state){
 	else if(*state == MENU){
 		updateMenu();
 		if(menu.state == STARTED){
+			initScore();
 			*state = RUNNING;
 		}
 	}
@@ -152,9 +154,15 @@ int main(int argc, char *argv[]){
 		greenKnob = (*knobs >> 8) & 0xFF;
 		blueKnob = *knobs & 0xFF;
 		
-		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		printf("Raw line: %X\n", *knobs);
+		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		
+		printf("Raw line: %X\n", *knobs);
 
 		printf("knob pressed: %d\n", knobPressed);
+
+		if(state == RUNNING) {
+			printf("Score of player 2: %i \n", scoreTable.pl2);
+		}
+
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 }
