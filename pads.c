@@ -19,17 +19,17 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset){
     // P1
      currentKnobP1 = redKnob;
     if( pads->p1Pos < 4 ){
-       pads->p1Pos += 10;
+       pads->p1Pos += 20;
     } else if (pads->p1Pos > SCREEN_HEIGHT - PAD_HEIGHT - 4) {
-	 pads->p1Pos -= 10;
+	 pads->p1Pos -= 20;
     } else {
         int check = previousKnobP1 - currentKnobP1;
 	printf("Check: %d\n", check);
             if (check < -1) {
-                pads->p1Pos += 10;
+                pads->p1Pos += 20;
             }
             if (check > 1) {
-                pads->p1Pos -= 10;
+                pads->p1Pos -= 20;
             }
     }
 

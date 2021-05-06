@@ -9,6 +9,6 @@
 #define SCREEN_HEIGHT 320
 #define CL_WIDTH 2
 #define CL_SEGMENTS 16
-#define BALL_SPEED 4 //Defined as pixels per frame
+#define BALL_SPEED 10 //Defined as pixels per frame
 
 #endif
