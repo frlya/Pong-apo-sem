@@ -3,10 +3,16 @@
 
 #include "font_types.h"
 #include "peripherals.h"
+#include "player_data.h"
+#include "games_states.h"
 
 extern font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
 
+void renderResults();
+
 void renderText(int state);
+
+void renderScore();
 
 int charWidth(int ch);
 

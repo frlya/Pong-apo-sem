@@ -3,9 +3,20 @@
 font_descriptor_t *fdes;
 
 void renderText(int state){
-    //WIP
+    if(state == RESULT) {
+		renderScore();
+	} else if (state == RUNNING){
+		renderResults();
+	}
 }
 
+void renderResults() {
+	
+}
+
+void renderScore() {
+	//drawStringToTheScreen();
+}
 
 /*
 *----------------------------------------------------
