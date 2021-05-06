@@ -26,7 +26,7 @@ bool updateScore(int player, int value){
             tmpInt >>= 1;
             *led_line |= tmpInt;
         }
-        if(player1.score == 10) player1.winner = true;
+        if(player1.score == 16) player1.winner = true;
         return true;
     }
     else if(player == 2){
@@ -42,7 +42,7 @@ bool updateScore(int player, int value){
             tmpShort <<= 1;
             *led_line |= tmpShort;
         }
-        if(player1.score == 10) player1.winner = true;
+        if(player2.score == 16) player2.winner = true;
         return true;
     }
     return false;

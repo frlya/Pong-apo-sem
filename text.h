@@ -1,6 +1,11 @@
 #ifndef TEXT_H
 #define TEXT_H
 
+#define OFFSET1 92
+#define OFFSET2 52 
+#define OFFSET3 8
+#define OFFSET4 4
+
 #include "font_types.h"
 #include "peripherals.h"
 #include "player_data.h"
@@ -9,6 +14,8 @@
 extern font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
 
 void renderResults();
+
+int stringWidth(char *str);
 
 void renderText(int state);
 

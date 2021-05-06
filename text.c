@@ -1,12 +1,15 @@
 #include "text.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 font_descriptor_t *fdes;
 
 void renderText(int state){
     if(state == RESULT) {
-		renderScore();
-	} else if (state == RUNNING){
 		renderResults();
+	} else if (state == RUNNING){
+		renderScore();
 	}
 }
 
@@ -15,7 +18,19 @@ void renderResults() {
 }
 
 void renderScore() {
-	//drawStringToTheScreen();
+	// 1.
+	char p[3];
+	sprintf(p, "%d", player1.score);
+	if(player1.score > 9){
+		drawStringToTheScreen(SCREEN_WIDTH/2 - OFFSET1, OFFSET4,p, 5, 0, COLOR_BLUE);
+	} else {
+		drawStringToTheScreen(SCREEN_WIDTH / 2 - OFFSET2, OFFSET4, p, 5, 0, COLOR_BLUE);
+	}
+
+	// 2.
+	sprintf(p, "%d", player2.score);
+	drawStringToTheScreen(SCREEN_WIDTH / 2 + OFFSET3, OFFSET4, p, 5, 0, COLOR_GREEN);
+	
 }
 
 /*
@@ -33,6 +48,16 @@ int charWidth(int ch){
 		width = fdes->width[ch-fdes->firstchar];
 	}
 	return width;
+}
+
+int stringWidth(char* str){
+	int i= 0;
+	int w = 0;
+	while(str[i]!= '\0') {
+		w += charWidth(str[i]);
+		++i;
+	}
+	return w;
 }
 
 /*

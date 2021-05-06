@@ -100,7 +100,7 @@ void render(int* state){
 		}
 		renderBall(&ball);
 		renderPads(&pads);
-		//renderText(state);
+		renderText(*state);
 	}
 	else if(*state == READY){
 		printf("Hi there fellow!\n");
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]){
 		//printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		
 		//printf("Raw line: %X\n", *knobs);
 		//printf("knob pressed: %d\n", knobPressed);
-
+		printf("%d\n", stringWidth("1"));
 		if (knobPressed == GREEN_PRESSED) {exitGame();}
 
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
