@@ -11,8 +11,20 @@ u_int8_t redKnob;
 u_int8_t greenKnob;
 u_int8_t blueKnob;
 
-int getPlayerOffset(int player){
-    int returnVal = 0;
+ uint8_t ledCounter;
+uint8_t baseColor;
+uint8_t currentLed;
+
+void ledPulse(uint8_t color, uint8_t led)
+{
+	currentLed = led;
+	ledCounter = 255;
+	baseColor = color;
+}
+
+int getPlayerOffset(int player)
+{
+	int returnVal = 0;
     //WIP
     return returnVal;
 }
@@ -47,3 +59,34 @@ void fillRect(int x, int y, int width, int height, unsigned short color){
 		}
 	}
 }
+
+void updateLed() {
+	uint8_t R = ((baseColor >> 2) * ledCounter);
+	uint8_t G =	((baseColor >> 1)%2) * ledCounter;
+	uint8_t B = (baseColor % 2) * ledCounter;
+	printf("R: %d | G: %d | B: %d \n", R,G,B);
+	if(ledCounter != 0){
+		ledCounter -= 15;
+	}
+
+	if (currentLed == 1)
+	{
+		*rgb_led1 = ((uint32_t)R << 16) + ((uint32_t)G << 8) + (uint32_t)B;
+	}
+	if (currentLed == 2)
+	{
+		*rgb_led2 = ((uint32_t)R << 16) + ((uint32_t)G << 8) + (uint32_t)B;
+	}
+}
+//  			 R         G         B
+// 0000 0000 1111 0000 0000 0000 0000 0000
+/*
+void ledRGB(uint8_t R, uint8_t G, uint8_t B, u_int8_t led) {	
+	if(led == 1) {
+		*rgb_led1 = ((uint32_t) R << 16) + ((uint32_t) G << 8) + (uint32_t) B;
+	}	
+	if(led == 2) {
+		*rgb_led2 = ((uint32_t)R << 16) + ((uint32_t)G << 8) + (uint32_t)B;
+	}
+}
+*/

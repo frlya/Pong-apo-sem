@@ -20,6 +20,9 @@ u_int8_t redKnob;
 u_int8_t greenKnob;
 u_int8_t blueKnob;
 
+extern uint8_t ledCounter;
+extern uint8_t baseColor;
+extern uint8_t currentLed;
 
 unsigned char knobPressed;
 
@@ -28,6 +31,10 @@ enum knobsPressed {
     GREEN_PRESSED = 2,
     BLUE_PRESSED = 1
 };
+
+void ledPulse(uint8_t color, uint8_t led);
+
+void updateLed();
 
 int getPlayerOffset(int player);
 

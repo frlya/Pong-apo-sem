@@ -6,6 +6,7 @@ void updateBall(ball_t *ball, pads_t *pads){
             ball->xVel *= -1;
             //x position is udpated in the handleCollision function
             ball->y += ball->yVel * BALL_SPEED;
+        
             break;
         case H_COLLISION:
             ball->yVel *= -1;
@@ -50,6 +51,7 @@ char handleCollision(ball_t *ball, pads_t *pads){
             && (ball->y > pads->p1Pos - BALL_SIZE - BALL_SPEED)
             && (ball->y < pads->p1Pos + PAD_HEIGHT + BALL_SIZE + BALL_SPEED)){
         //Ball collides with the left pad
+        ledPulse(0b111,1);
         ball->x = 2 * (BALL_SPEED + PAD_WIDTH) + BALL_SPEED - ball->x;
         retValue = V_COLLISION;
     }
@@ -57,15 +59,18 @@ char handleCollision(ball_t *ball, pads_t *pads){
             && (ball->y > pads->p2Pos - BALL_SIZE - BALL_SPEED)
             && (ball->y < pads->p2Pos + PAD_HEIGHT + BALL_SIZE + BALL_SPEED)){
         //Ball collides with the right pad
+        ledPulse(0b111, 2);
         int w = SCREEN_WIDTH - PAD_X_OFFSET - PAD_WIDTH;
         ball->x = 2 * (w - BALL_SIZE) - BALL_SPEED - ball->x;
         retValue = V_COLLISION;
     }
     else if(ball->x < BALL_SIZE){
         //Ball reaches the left edge of the screen
+        ledPulse(0b010, 1);
         return L_EXIT;
     }
     else if(ball->x > SCREEN_WIDTH - BALL_SIZE){
+        ledPulse(0b001, 2);
         //Ball reaches the right edge of the screen
         return R_EXIT;
     }

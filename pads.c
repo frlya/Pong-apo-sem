@@ -27,7 +27,6 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset){
     } else {
         int check = previousKnobP1 - currentKnobP1;
 
-	    printf("Check: %d\n", check);
             if (check < -1 && check > -50) {
                 pads->p1Pos += (padsSpeedScale * PAD_SPEED);
             }
@@ -48,7 +47,7 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset){
 	    pads->p2Pos -= 10;
       } else {
 	  int check = previousKnobP2 - currentKnobP2;
-          printf("Check: %d\n", check);
+  
           if (check < -1 && check > -50)
           {
               pads->p2Pos += (padsSpeedScale * PAD_SPEED);

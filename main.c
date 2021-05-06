@@ -115,6 +115,7 @@ void render(int* state){
 		renderMenu();
 		//printf("Done!\n");
 	}
+	updateLed();
 	renderScreenData(parlcdMemBase);
 }
 
@@ -161,11 +162,10 @@ int main(int argc, char *argv[]){
 		redKnob = (*knobs >> 16) & 0xFF;
 		greenKnob = (*knobs >> 8) & 0xFF;
 		blueKnob = *knobs & 0xFF;
-		
-		printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		
-		printf("Raw line: %X\n", *knobs);
 
-		printf("knob pressed: %d\n", knobPressed);
+		//printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		
+		//printf("Raw line: %X\n", *knobs);
+		//printf("knob pressed: %d\n", knobPressed);
 
 		if (knobPressed == GREEN_PRESSED) {exitGame();}
 
