@@ -7,6 +7,8 @@ menuButtons_t mB;
 menu_t menu;
 int *state_c;
 
+
+
 void pongText(){
     if(menu.titleState > 0) { 
         drawChar(0 * 120, 0, 'P', COLOR_WHITE, PONG_TEXT_SCALE);
@@ -87,19 +89,19 @@ void updateMenu(){
 		switch(mB.current)
 		{
 			case 0:
-			  *state_c = 2; //Running
+			  menu.state = STARTED; //Running
 		  	  break;
 			case 1:
 			  printf("Test\n");
 			  break;	  
 		}
 	}
-	}
+
+    }
 }
 
 void menuInit(int *st){
     state_c = st;
-    printf("Good done bettter\n");
     // Init menu handle
     menu.ticker = 0;
     menu.titleState = 0;

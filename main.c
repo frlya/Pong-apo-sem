@@ -19,14 +19,8 @@
 #include "text.h"
 #include "font_types.h"
 #include "menu.h"
-#include "score.h"
-
-enum gameState{
-	READY = 1,
-	RUNNING,
-	RESULT,
-	MENU
-};
+#include "player_data.h"
+#include "games_states.h"
 
 int state = MENU;
 
@@ -86,6 +80,15 @@ void setup(){
 	printf("Good\n");
 	//Other init
 	menuInit(&state);
+	initPlayers();
+}
+
+void exitGame()
+{
+	clearScreen();
+	renderScreenData(parlcdMemBase);
+	*led_line = 0;
+	exit(0);
 }
 
 void render(int* state){
@@ -98,15 +101,15 @@ void render(int* state){
 		renderBall(&ball);
 		renderPads(&pads);
 		//renderText(state);
-		//if(score == max_score){ state = RESULT; }
 	}
 	else if(*state == READY){
+		printf("Hi there fellow!\n");
 		//resetBall(&ball);
 		//renderText(state);
 	}
 	else if(*state == RESULT){
 		//resetBall(&ball);
-		//renderText(state);
+		renderText(*state);
 	}
 	else if(*state == MENU){
 		renderMenu();
@@ -121,21 +124,22 @@ void update(int *state){
 		int p2Offset = getPlayerOffset(2);
 		updatePads(&pads, p1Offset, p2Offset);
 		updateBall(&ball, &pads);
+		if (checkWin()) { *state = RESULT; }
 	}
 	else if(*state == READY){
+
 		// Get information from knobs to start 
 		//WIP
 		*state = RUNNING;
 	}
-	else if(*state == RESULT){
+	else if(*state == RESULT) {
 		// Score screen, win_sound, led and rgb animation 
 		//WIP
-		*state = READY;
+		//*state = READY;
 	}
 	else if(*state == MENU){
 		updateMenu();
 		if(menu.state == STARTED){
-			initScore();
 			*state = RUNNING;
 		}
 	}
@@ -163,9 +167,7 @@ int main(int argc, char *argv[]){
 
 		printf("knob pressed: %d\n", knobPressed);
 
-		if(state == RUNNING) {
-			printf("Score of player 2: %i \n", scoreTable.pl2);
-		}
+		if (knobPressed == GREEN_PRESSED) {exitGame();}
 
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}

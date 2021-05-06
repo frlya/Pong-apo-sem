@@ -14,13 +14,34 @@ void initPlayers(){
 }
 
 bool updateScore(int player, int value){
+    unsigned int tmpInt;
+    unsigned short tmpShort;
     if(player == 1){
         player1.score = (player1.score + 1) * value;
+        if(player1.score == 1) {
+            tmpInt = 0x80000000;
+            *led_line |= tmpInt;
+        } else {
+            tmpInt = *led_line;
+            tmpInt >>= 1;
+            *led_line |= tmpInt;
+        }
         if(player1.score == 10) player1.winner = true;
         return true;
     }
     else if(player == 2){
         player2.score = (player2.score + 1) * value;
+        if (player2.score == 1)
+        {
+            tmpShort = 0x1;
+            *led_line |= tmpShort;
+        }
+        else
+        {
+            tmpShort = *led_line;
+            tmpShort <<= 1;
+            *led_line |= tmpShort;
+        }
         if(player1.score == 10) player1.winner = true;
         return true;
     }
@@ -40,6 +61,8 @@ void resetPlayers(){
     //Player2 reset
     player2.score = 0;
     player2.winner = false;
+
+    *led_line = 0;
 }
 
 int checkWin(){

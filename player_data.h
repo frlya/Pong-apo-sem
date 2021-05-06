@@ -1,4 +1,12 @@
+#ifndef PLAYER_DATA_H
+#define PLAYER_DATA_H
+
+#define WINRESULTMAX 16
+#define WINRESULTMIN 2
+
 #include <stdbool.h>
+
+#include "peripherals.h"
 
 typedef struct {
     int score;
@@ -22,3 +30,5 @@ void resetPlayers();
 
 //Returns number of a player that won or zero if nobody won
 int checkWin();
+
+#endif

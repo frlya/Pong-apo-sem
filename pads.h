@@ -18,6 +18,8 @@ u_int8_t currentKnobP1;
 uint8_t previousKnobP2;
 u_int8_t currentKnobP2;
 
+unsigned char padsSpeedScale;
+
 typedef struct{
     int p1Pos;
     int p2Pos;
