@@ -5,6 +5,8 @@ u_int8_t currentKnobP1;
 uint8_t previousKnobP2;
 u_int8_t currentKnobP2;
 
+unsigned char padsSpeedScale = 6;
+
 void initHandle()
 {
     previousKnobP1 = redKnob;
@@ -17,19 +19,20 @@ void initHandle()
 void updatePads(pads_t *pads, int p1Offset, int p2Offset){
     //Simulating pads movement, will be replaced by controlled movement later
     // P1
-     currentKnobP1 = redKnob;
+    currentKnobP1 = redKnob;
     if( pads->p1Pos < 4 ){
-       pads->p1Pos += 20;
+        pads->p1Pos += 10;
     } else if (pads->p1Pos > SCREEN_HEIGHT - PAD_HEIGHT - 4) {
-	 pads->p1Pos -= 20;
+	    pads->p1Pos -= 10;
     } else {
         int check = previousKnobP1 - currentKnobP1;
-	printf("Check: %d\n", check);
-            if (check < -1) {
-                pads->p1Pos += 20;
+
+	    printf("Check: %d\n", check);
+            if (check < -1 && check > -50) {
+                pads->p1Pos += (padsSpeedScale * PAD_SPEED);
             }
-            if (check > 1) {
-                pads->p1Pos -= 20;
+            if (check > 1 && check < 50) {
+                pads->p1Pos -= (padsSpeedScale * PAD_SPEED);
             }
     }
 
@@ -40,16 +43,20 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset){
 
       currentKnobP2 = blueKnob;
       if (pads->p2Pos < 4)  {
-          pads->p2Pos += 10;         
+        pads->p2Pos += 10;         
       } else if (pads->p2Pos > SCREEN_HEIGHT - PAD_HEIGHT - 4) {
-	  pads->p2Pos -= 10;
+	    pads->p2Pos -= 10;
       } else {
 	  int check = previousKnobP2 - currentKnobP2;
           printf("Check: %d\n", check);
-	  if (check < -2) {
-	  	pads->p2Pos += 20;
-	  }
-	  if (check > 2) {							                  pads->p2Pos -= 20;						          }
+          if (check < -1 && check > -50)
+          {
+              pads->p2Pos += (padsSpeedScale * PAD_SPEED);
+          }
+          if (check > 1 && check < 50)
+          {
+              pads->p2Pos -= (padsSpeedScale * PAD_SPEED);
+          }
       }
 	 previousKnobP2 = currentKnobP2;
 }
