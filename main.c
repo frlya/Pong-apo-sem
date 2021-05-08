@@ -27,7 +27,7 @@ int state = MENU;
 struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
 // Game mode
 pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
-ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1};
+ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1, .left = true, .speed = BASE_BALL_SPEED};
 _Bool stateSwitch = true;
 
 int scale;
@@ -94,18 +94,16 @@ void exitGame()
 void render(int* state){
 	clearScreen();
 	if(*state == RUNNING){
-		if(stateSwitch){
-			stateSwitch = true;
-			renderCentralLine();
-		}
+		renderCentralLine();
 		renderBall(&ball);
 		renderPads(&pads);
 		renderText(*state);
 	}
 	else if(*state == READY){
-		printf("Hi there fellow!\n");
-		//resetBall(&ball);
-		//renderText(state);
+		renderCentralLine();
+		renderBall(&ball);
+		renderPads(&pads);
+		renderText(*state);
 	}
 	else if(*state == RESULT){
 		//resetBall(&ball);
@@ -125,13 +123,18 @@ void update(int *state){
 		int p2Offset = getPlayerOffset(2);
 		updatePads(&pads, p1Offset, p2Offset);
 		updateBall(&ball, &pads);
-		if (checkWin()) { *state = RESULT; }
+		if (checkWin()) { 
+			*state = RESULT; 
+			initSnake();
+
+		}
+		if(ball.left && *state == RUNNING){
+			*state = READY;
+		}
 	}
 	else if(*state == READY){
-
-		// Get information from knobs to start 
-		//WIP
-		*state = RUNNING;
+		updateText(state);
+		snakeLED();
 	}
 	else if(*state == RESULT) {
 		// Score screen, win_sound, led and rgb animation 
@@ -167,8 +170,7 @@ int main(int argc, char *argv[]){
 		//printf("Raw line: %X\n", *knobs);
 		//printf("knob pressed: %d\n", knobPressed);
 		printf("%d\n", stringWidth("1"));
-		if (knobPressed == GREEN_PRESSED) {exitGame();}
-
+		//if(knobPressed == RED_PRESSED) {exitGame();}
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 }

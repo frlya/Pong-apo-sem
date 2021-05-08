@@ -13,10 +13,10 @@
 #define R_EXIT 105
 
 uint8_t previousKnobP1;
-u_int8_t currentKnobP1;
+uint8_t currentKnobP1;
 
 uint8_t previousKnobP2;
-u_int8_t currentKnobP2;
+uint8_t currentKnobP2;
 
 unsigned char padsSpeedScale;
 

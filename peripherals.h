@@ -23,8 +23,11 @@ u_int8_t blueKnob;
 extern uint8_t ledCounter;
 extern uint8_t baseColor;
 extern uint8_t currentLed;
+unsigned int ledCount;
 
 unsigned char knobPressed;
+
+unsigned char right;
 
 enum knobsPressed {
     RED_PRESSED = 4,
@@ -45,5 +48,13 @@ void clearScreen();
 void renderScreenData(unsigned char *parlcdMemBase);
 
 void fillRect(int x, int y, int width, int height, unsigned short color);
+
+void snakeLED();
+
+void initSnake();
+
+void initWinSnakeLED();
+
+void winSnakeLED();
 
 #endif

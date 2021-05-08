@@ -61,8 +61,8 @@ void updatePads(pads_t *pads, int p1Offset, int p2Offset){
 }
 
 void renderPads(pads_t *pads){
-    fillRect(PAD_X_OFFSET, pads->p1Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_WHITE);
-    fillRect(SCREEN_WIDTH - PAD_X_OFFSET - PAD_WIDTH - 1, pads->p2Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_WHITE);
+    fillRect(PAD_X_OFFSET, pads->p1Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_RED);
+    fillRect(SCREEN_WIDTH - PAD_X_OFFSET - PAD_WIDTH - 1, pads->p2Pos, PAD_WIDTH, PAD_HEIGHT, COLOR_BLUE);
 }
 
 void renderCentralLine(){

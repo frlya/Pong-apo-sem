@@ -9,7 +9,7 @@
 #define SCREEN_HEIGHT 320
 #define CL_WIDTH 2
 #define CL_SEGMENTS 16
-#define BALL_SPEED 10 //Defined as pixels per frame
-#define PAD_SPEED 5
+#define BASE_BALL_SPEED 8 //Defined as pixels per frame
+#define PAD_SPEED 3
 
 #endif

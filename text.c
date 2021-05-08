@@ -5,32 +5,80 @@
 
 font_descriptor_t *fdes;
 
+int countdownTimer = COUNTDOWN_PERIOD;
+int currentCountdownScale = COUNTDOWN_BASE_SCALE;
+int currentCountdownState = 3;
+
 void renderText(int state){
     if(state == RESULT) {
 		renderResults();
-	} else if (state == RUNNING){
+		//recursLED(*led_line);
+	}
+	else if (state == RUNNING){
 		renderScore();
+	}
+	else if (state == READY){
+		renderCountdown();
+	}
+}
+
+void updateText(int *state){
+	if (*state == READY){
+		if(countdownTimer % 10 == 0){
+			currentCountdownScale -= 1;
+		}
+		if(countdownTimer % 20 == 0 && countdownTimer != COUNTDOWN_PERIOD){
+			countdownTimer = COUNTDOWN_PERIOD;
+			currentCountdownState -= 1;
+			countdownTimer -= 1;
+		}
+		else{
+			countdownTimer -= 1;
+		}
+		if(currentCountdownState == 0){
+			countdownTimer = COUNTDOWN_PERIOD;
+			currentCountdownScale = COUNTDOWN_BASE_SCALE;
+			currentCountdownState = 3;
+			*state = RUNNING;
+		}
 	}
 }
 
 void renderResults() {
-	
+	int playerNum = checkWin();
+	if(playerNum > 0){
+		char winMessage[14] = "Player X wins";
+		winMessage[7] = ((char) playerNum) + '0';
+		drawStringToTheScreen(
+			SCREEN_WIDTH / 2 - (stringWidth(winMessage) * WIN_TEXT_SCALE)/2,
+			SCREEN_HEIGHT / 2 - (CHAR_HEIGHT * WIN_TEXT_SCALE) / 2, winMessage,
+			WIN_TEXT_SCALE,
+			0,
+			COLOR_YELLOW
+		);
+	}
 }
 
 void renderScore() {
 	// 1.
 	char p[3];
 	sprintf(p, "%d", player1.score);
-	if(player1.score > 9){
-		drawStringToTheScreen(SCREEN_WIDTH/2 - OFFSET1, OFFSET4,p, 5, 0, COLOR_BLUE);
-	} else {
-		drawStringToTheScreen(SCREEN_WIDTH / 2 - OFFSET2, OFFSET4, p, 5, 0, COLOR_BLUE);
-	}
+	drawStringToTheScreen(SCREEN_WIDTH/2 - (OFFSET1 + SCORE_TEXT_SCALE * stringWidth(p)), OFFSET2, p, SCORE_TEXT_SCALE, 0, COLOR_RED);
 
 	// 2.
 	sprintf(p, "%d", player2.score);
-	drawStringToTheScreen(SCREEN_WIDTH / 2 + OFFSET3, OFFSET4, p, 5, 0, COLOR_GREEN);
+	drawStringToTheScreen(SCREEN_WIDTH / 2 + OFFSET1, OFFSET2, p, SCORE_TEXT_SCALE, 0, COLOR_BLUE);
 	
+}
+
+void renderCountdown(){
+	drawChar(
+		SCREEN_WIDTH / 2 - (currentCountdownScale * charWidth((char) currentCountdownState + '0')) / 2,
+		SCREEN_HEIGHT / 2 - (currentCountdownScale * CHAR_HEIGHT) / 2,
+		(char) currentCountdownState + '0',
+		COLOR_GREEN,
+		currentCountdownScale
+	);
 }
 
 /*

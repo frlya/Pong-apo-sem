@@ -15,11 +15,39 @@ u_int8_t blueKnob;
 uint8_t baseColor;
 uint8_t currentLed;
 
+unsigned char right;
+unsigned int ledCount;
+
 void ledPulse(uint8_t color, uint8_t led)
 {
 	currentLed = led;
 	ledCounter = 255;
 	baseColor = color;
+}
+
+void initSnake(){
+	*led_line = 0x80000000;
+	right = 1;
+	ledCount = 0;
+}
+
+void snakeLED(){
+	if(ledCount % 10000) {
+		if(right) {
+			if(*led_line == 1){
+				right = 0;
+			} else {
+				*led_line >>= 1;
+			}	
+		} else {
+			if(*led_line == 0x80000000){
+				right = 1;
+			} else {
+				*led_line <<= 1;
+			}
+		}
+	}
+	ledCount++;
 }
 
 int getPlayerOffset(int player)
@@ -64,7 +92,7 @@ void updateLed() {
 	uint8_t R = ((baseColor >> 2) * ledCounter);
 	uint8_t G =	((baseColor >> 1)%2) * ledCounter;
 	uint8_t B = (baseColor % 2) * ledCounter;
-	printf("R: %d | G: %d | B: %d \n", R,G,B);
+
 	if(ledCounter != 0){
 		ledCounter -= 15;
 	}
@@ -77,6 +105,14 @@ void updateLed() {
 	{
 		*rgb_led2 = ((uint32_t)R << 16) + ((uint32_t)G << 8) + (uint32_t)B;
 	}
+}
+
+void initWinSnakeLED() {
+	
+}
+
+void winSnakeLED() {
+
 }
 //  			 R         G         B
 // 0000 0000 1111 0000 0000 0000 0000 0000

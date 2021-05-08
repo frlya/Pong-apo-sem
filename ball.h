@@ -15,6 +15,8 @@
 typedef struct {
     int x, y;       // Coordinates of the ball
     int xVel, yVel; // Width and height of the ball
+    int speed;
+    bool left;
 } ball_t;
 
 void updateBall(ball_t *ball, pads_t *pads);
