@@ -25,6 +25,6 @@ void renderBall(ball_t *ball);
 
 char handleCollision(ball_t *ball, pads_t *pads);
 
-void resetBall();
+void resetBall(ball_t *ball);
 
 #endif

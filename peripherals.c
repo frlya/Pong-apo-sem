@@ -18,6 +18,10 @@ uint8_t currentLed;
 unsigned char right;
 unsigned int ledCount;
 
+bool redReleased;
+bool greenReleased;
+bool blueReleased;
+
 void ledPulse(uint8_t color, uint8_t led)
 {
 	currentLed = led;
@@ -25,29 +29,23 @@ void ledPulse(uint8_t color, uint8_t led)
 	baseColor = color;
 }
 
-void initSnake(){
-	*led_line = 0x80000000;
-	right = 1;
-	ledCount = 0;
-}
+void inputHandler(){
+	char redPressed = knobPressed & 0b100;
+	char greenPressed = knobPressed & 0b010;
+	char bluePressed = knobPressed & 0b001;
 
-void snakeLED(){
-	if(ledCount % 10000) {
-		if(right) {
-			if(*led_line == 1){
-				right = 0;
-			} else {
-				*led_line >>= 1;
-			}	
-		} else {
-			if(*led_line == 0x80000000){
-				right = 1;
-			} else {
-				*led_line <<= 1;
-			}
-		}
-	}
-	ledCount++;
+	redReleased = false;
+	greenReleased = false;
+	blueReleased = false;
+
+	knobPressed = (*knobs) >> 24;
+	redKnob = (*knobs >> 16) & 0xFF;
+	greenKnob = (*knobs >> 8) & 0xFF;
+	blueKnob = *knobs & 0xFF;
+
+	if (redPressed - (knobPressed & 0b100) == 0b100) redReleased = true;
+	if (greenPressed - (knobPressed & 0b010) == 0b010) greenReleased = true;
+	if (bluePressed - (knobPressed & 0b001) == 0b001) blueReleased = true;
 }
 
 int getPlayerOffset(int player)
@@ -107,22 +105,62 @@ void updateLed() {
 	}
 }
 
+void initSnake()
+{
+	*led_line = 0x80000000;
+	right = 1;
+	ledCount = 0;
+}
+
+void snakeLED()
+{
+	if (ledCount % 10000)
+	{
+		if (right)
+		{
+			if (*led_line == 1)
+			{
+				right = 0;
+			}
+			else
+			{
+				*led_line >>= 1;
+			}
+		}
+		else
+		{
+			if (*led_line == 0x80000000)
+			{
+				right = 1;
+			}
+			else
+			{
+				*led_line <<= 1;
+			}
+		}
+	}
+	ledCount++;
+}
+
 void initWinSnakeLED() {
-	
+	*led_line = 0x00018000;
+	ledCount = 0;
 }
 
 void winSnakeLED() {
-
-}
-//  			 R         G         B
-// 0000 0000 1111 0000 0000 0000 0000 0000
-/*
-void ledRGB(uint8_t R, uint8_t G, uint8_t B, u_int8_t led) {	
-	if(led == 1) {
-		*rgb_led1 = ((uint32_t) R << 16) + ((uint32_t) G << 8) + (uint32_t) B;
-	}	
-	if(led == 2) {
-		*rgb_led2 = ((uint32_t)R << 16) + ((uint32_t)G << 8) + (uint32_t)B;
+	if(ledCount % 1000) {
+		unsigned int tmpLF;
+		unsigned int tmpRT;
+		if(*led_line == 0xFFFFFFFF) {
+			*led_line = 0x00018000;
+		} else {
+			tmpLF = *led_line;
+			tmpRT = *led_line;
+			tmpLF <<= 1;
+			tmpRT >>= 1;
+			*led_line = *led_line | tmpLF | tmpRT ;
+		}
 	}
+	ledCount++;
 }
-*/
+

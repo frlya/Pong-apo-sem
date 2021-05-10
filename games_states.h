@@ -6,7 +6,8 @@ enum gameState
     READY = 1,
     RUNNING,
     RESULT,
-    MENU
+    MENU,
+    PAUSE
 };
 
 #endif

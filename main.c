@@ -1,47 +1,21 @@
 #define _POSIX_C_SOURCE 200112L
 
-#include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <time.h>
-#include <unistd.h>
-#include <math.h>
+#include "game_controller.h"
 
-#include "mzapo_regs.h"
-#include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
-#include "colors.h"
-#include "dimensions.h"
-#include "peripherals.h"
-#include "pads.h"
-#include "ball.h"
-#include "text.h"
-#include "font_types.h"
-#include "menu.h"
-#include "player_data.h"
-#include "games_states.h"
-
-int state = MENU;
-
-struct timespec loopDelay = {.tv_sec = 0, .tv_nsec = 20 * 1000 * 1000};
-// Game mode
-pads_t pads = {.p1Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p2Pos = SCREEN_HEIGHT / 2 - PAD_HEIGHT / 2, .p1Vel = 1, .p2Vel = -1};
-ball_t ball = {.x = START_POS_X, .y = START_POS_Y, .xVel = 1, .yVel = 1, .left = true, .speed = BASE_BALL_SPEED};
-_Bool stateSwitch = true;
-
-int scale;
-
-void setup(){
+void setupScreen() {
+	state = MENU;
 	//Screen data init
 	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(unsigned short));
-  	if(fb == NULL){
+	if (fb == NULL)
+	{
 		exit(-1);
 	}
 
 	//LCD screen setup
 	parlcdMemBase = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
-	if(parlcdMemBase == NULL){
+	if (parlcdMemBase == NULL)
+	{
 		exit(-1);
 	}
 	//parlcd_hx8357_init(parlcdMemBase);
@@ -50,127 +24,62 @@ void setup(){
 	parlcd_write_cmd(parlcdMemBase, 0x2c);
 	int ptr = 0;
 	unsigned int c;
-  	for (int i = 0; i < SCREEN_HEIGHT; i++){
-    	for (int j = 0; j < SCREEN_WIDTH; j++){
+	for (int i = 0; i < SCREEN_HEIGHT; i++)
+	{
+		for (int j = 0; j < SCREEN_WIDTH; j++)
+		{
 			c = 0;
-      		fb[ptr] = c;
-      		parlcd_write_data(parlcdMemBase, fb[ptr++]);
-    	}
-  	}
+			fb[ptr] = c;
+			parlcd_write_data(parlcdMemBase, fb[ptr++]);
+		}
+	}
+}
+
+void setupLoop() {
 	//Loop timer setup
 	loopDelay.tv_sec = 0;
-  	loopDelay.tv_nsec = 17 * 1000 * 1000;
+	loopDelay.tv_nsec = 17 * 1000 * 1000;
+}
 
+void setupFont(){
 	//Font is added
 	fdes = &font_winFreeSystem14x16;
 	scale = 10;
+}
 
-	// Lights init
+void setupPeripherials() {
+	//Lights init
 	uint8_t *spiled_mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
-	if(spiled_mem_base == NULL) {
-		fprintf(stderr, "Peripheral init failed!");
+	if (spiled_mem_base == NULL)
+	{
+		fprintf(stderr, "Peripheral init failed!\n");
 		exit(1);
 	}
+	led_line = (volatile uint32_t *)(spiled_mem_base + SPILED_REG_LED_LINE_o);
+	rgb_led1 = (volatile uint32_t *)(spiled_mem_base + SPILED_REG_LED_RGB1_o);
+	rgb_led2 = (volatile uint32_t *)(spiled_mem_base + SPILED_REG_LED_RGB2_o);
+	knobs = (volatile uint32_t *)(spiled_mem_base + SPILED_REG_KNOBS_8BIT_o);
+}
 
-	// Peripheral init
-	led_line = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_LED_LINE_o);
-	rgb_led1 = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_LED_RGB1_o);
-	rgb_led2 = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_LED_RGB2_o);
-	knobs = (volatile uint32_t *) (spiled_mem_base + SPILED_REG_KNOBS_8BIT_o);
-	printf("Good\n");
-	//Other init
+void setup(){
+	setupScreen();
+	setupLoop();
+	setupFont();
+	setupPeripherials();
 	menuInit(&state);
 	initPlayers();
 }
 
-void exitGame()
-{
-	clearScreen();
-	renderScreenData(parlcdMemBase);
-	*led_line = 0;
-	exit(0);
-}
-
-void render(int* state){
-	clearScreen();
-	if(*state == RUNNING){
-		renderCentralLine();
-		renderBall(&ball);
-		renderPads(&pads);
-		renderText(*state);
-	}
-	else if(*state == READY){
-		renderCentralLine();
-		renderBall(&ball);
-		renderPads(&pads);
-		renderText(*state);
-	}
-	else if(*state == RESULT){
-		//resetBall(&ball);
-		renderText(*state);
-	}
-	else if(*state == MENU){
-		renderMenu();
-		//printf("Done!\n");
-	}
-	updateLed();
-	renderScreenData(parlcdMemBase);
-}
-
-void update(int *state){
-	if(*state == RUNNING){
-		int p1Offset = getPlayerOffset(1);
-		int p2Offset = getPlayerOffset(2);
-		updatePads(&pads, p1Offset, p2Offset);
-		updateBall(&ball, &pads);
-		if (checkWin()) { 
-			*state = RESULT; 
-			initSnake();
-
-		}
-		if(ball.left && *state == RUNNING){
-			*state = READY;
-		}
-	}
-	else if(*state == READY){
-		updateText(state);
-		snakeLED();
-	}
-	else if(*state == RESULT) {
-		// Score screen, win_sound, led and rgb animation 
-		//WIP
-		//*state = READY;
-	}
-	else if(*state == MENU){
-		updateMenu();
-		if(menu.state == STARTED){
-			*state = RUNNING;
-		}
-	}
-}
-
 int main(int argc, char *argv[]){
 	setup();
-
-	//
-	*led_line = 0;
-	//
 	printf("Welcome to Pong!\n");
 	while(true){
-		// Main program loop
+
 		update(&state);
 		render(&state);
+		inputHandler();
 
-		knobPressed = (*knobs) >> 24;
-		redKnob = (*knobs >> 16) & 0xFF;
-		greenKnob = (*knobs >> 8) & 0xFF;
-		blueKnob = *knobs & 0xFF;
-
-		//printf("Rk: %d| Gk: %d | Bk: %d \n", redKnob, greenKnob, blueKnob);		
-		//printf("Raw line: %X\n", *knobs);
-		//printf("knob pressed: %d\n", knobPressed);
-		printf("%d\n", stringWidth("1"));
-		//if(knobPressed == RED_PRESSED) {exitGame();}
+		if(knobPressed == URGENT_EXIT) {exitGame();}
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 }

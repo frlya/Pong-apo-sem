@@ -35,4 +35,6 @@ void renderCentralLine();
 
 void initHandle();
 
+void resetPads(pads_t *pads);
+
 #endif

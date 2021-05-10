@@ -3,10 +3,6 @@
 
 #define CHAR_HEIGHT 14
 
-#define WIN_TEXT_SCALE 5
-#define SCORE_TEXT_SCALE 4
-#define COUNTDOWN_BASE_SCALE 9
-
 #define OFFSET1 8
 #define OFFSET2 4
 
@@ -42,8 +38,10 @@ void drawText(int x, int y, char *text);
 
 void drawChar(int x, int y, char ch, unsigned short color, int scale);
 
-void drawStringToTheScreen(int x, int y, char* line, int scale, int kerning, unsigned short color);
+void drawStringToScreen(int x, int y, char* line, int scale, int kerning, unsigned short color);
 
 int stringWidth(char *str);
+
+void renderPause();
 
 #endif

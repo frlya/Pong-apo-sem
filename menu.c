@@ -10,7 +10,12 @@ int *state_c;
 uint8_t previousKnobMenu;
 uint8_t currentKnobMenu;
 
-void pongText(){
+unsigned char navigationScaleLeft;
+unsigned char navigationScaleRight;
+unsigned char navigationScaleCenter;
+
+void pongText()
+{
     uint16_t pongColors[4] = {COLOR_RED, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE};
 
     if(menu.titleState > 0) { 
@@ -35,7 +40,7 @@ void pongText(){
 }
 
 void renderButtons() {
-    drawStringToTheScreen(
+    drawStringToScreen(
         MENU_TEXT_SPACE,
         MENU_TEXT_Y_OFFSET - MENU_TEXT_SCALE_NORMAL * (CHAR_HEIGHT / 2),
         menu.mainItems[(menu.mainIndex - 1 + menu.maxMain) % menu.maxMain],
@@ -44,7 +49,7 @@ void renderButtons() {
         COLOR_WHITE
     );
 
-    drawStringToTheScreen(
+    drawStringToScreen(
         SCREEN_WIDTH / 2 - stringWidth(menu.mainItems[(menu.mainIndex) % menu.maxMain]) * MENU_TEXT_SCALE_SELECTED / 2,
         MENU_TEXT_Y_OFFSET - MENU_TEXT_SCALE_SELECTED * (CHAR_HEIGHT / 2),
         menu.mainItems[(menu.mainIndex) % menu.maxMain],
@@ -53,7 +58,7 @@ void renderButtons() {
         COLOR_YELLOW
     );
 
-    drawStringToTheScreen(
+    drawStringToScreen(
         SCREEN_WIDTH - MENU_TEXT_SPACE - stringWidth(menu.mainItems[(menu.mainIndex + 1) % menu.maxMain]) * MENU_TEXT_SCALE_NORMAL,
         MENU_TEXT_Y_OFFSET - MENU_TEXT_SCALE_NORMAL * (CHAR_HEIGHT / 2),
         menu.mainItems[(menu.mainIndex + 1) % menu.maxMain],
@@ -61,21 +66,64 @@ void renderButtons() {
         0,
         COLOR_WHITE
     );
+
+    drawChar(
+        SCREEN_WIDTH/2 - charWidth(0x5e)/2 * navigationScaleCenter,
+        SCREEN_HEIGHT - CHAR_HEIGHT * navigationScaleCenter,
+        0x5e,
+        COLOR_GREEN,
+        navigationScaleCenter
+    );
+
+    drawChar(
+        0,
+        MENU_TEXT_Y_OFFSET - MENU_TEXT_SCALE_SELECTED * (CHAR_HEIGHT / 2),
+        0x3c,
+        COLOR_RED,
+        navigationScaleLeft
+    );
+    drawChar(
+        SCREEN_WIDTH - charWidth(0x5e) * navigationScaleRight,
+        MENU_TEXT_Y_OFFSET - MENU_TEXT_SCALE_SELECTED * (CHAR_HEIGHT / 2),
+        0x3e,
+        COLOR_BLUE,
+        navigationScaleRight
+    );
 }
 
 void renderMenu(){
-    if(menu.state == BEGIN || menu.state == PONG_HEADER_DONE || menu.state == MENU_BUTTONS || menu.state == SETTINGS){
+    if(menu.state == BEGIN || menu.state == PONG_HEADER_DONE || menu.state == MENU_BUTTONS){
         pongText();
     }
     if(menu.state == PONG_HEADER_DONE){
-        drawStringToTheScreen(50, 170, "Hey Mate!", 4, 0, COLOR_WHITE);
-		drawStringToTheScreen(50, 230, "Wanna play some pong? ;)", 2, 0, COLOR_WHITE);
+        drawStringToScreen(50, 170, "Hey Mate!", 4, 0, COLOR_WHITE);
+		drawStringToScreen(50, 230, "Wanna play some pong? ;)", 2, 0, COLOR_WHITE);
     } 
     if(menu.state == MENU_BUTTONS) {
         renderButtons();
     }
-    if(menu.state == SETTINGS) {
-        
+    if(menu.state == CREDITS) {
+        if(menu.ticker < 400){
+            drawStringToScreen(
+                SCREEN_WIDTH / 2 - stringWidth("Ilya Fralou") * MENU_TEXT_CREDITS / 2,
+                SCREEN_HEIGHT - menu.ticker,
+                "Ilya Fralou",
+                MENU_TEXT_CREDITS,
+                0,
+                COLOR_RED
+            );
+        }
+        else{
+            drawStringToScreen(
+                SCREEN_WIDTH / 2 - stringWidth("Jakub Sakar") * MENU_TEXT_CREDITS / 2,
+                SCREEN_HEIGHT - menu.ticker + 400,
+                "Jakub Sakar",
+                MENU_TEXT_CREDITS,
+                0,
+                COLOR_BLUE
+            );
+        }
+        printf("Ticker: %d\n", menu.ticker);
     }
 }
 
@@ -101,48 +149,35 @@ void updateMenu(){
     }
 
     else if(menu.state == MENU_BUTTONS){
-        //currentKnobMenu = greenKnob;
-
-        if(menu.buttonCooldown == 0) {
-            //int check = previousKnobMenu - currentKnobMenu;
-
-            if (knobPressed == BLUE_PRESSED){
-                menu.mainIndex = (menu.mainIndex + 1) % 3;
-            }
-            if (knobPressed == RED_PRESSED){
-                menu.mainIndex = (menu.mainIndex - 1 + menu.maxMain) % 3;
-            }
-
-            menu.buttonCooldown = 2;
-            
-        } else { menu.buttonCooldown--; }
-
-        //previousKnobMenu = currentKnobMenu;
         
-        printf("MENU STATE: %d\n", menu.mainIndex);
+        if(knobPressed == BLUE_PRESSED) {
+            navigationScaleRight = 3;
+        }
 
-        /*if (menu.buttonCooldown == 0) {
-            if (knobPressed == (unsigned char)BLUE_PRESSED){
-                mB.arr[mB.current].colorBack = menu.color;
-                mB.current++;
-                mB.current %= mB.max;
-                mB.arr[mB.current].colorBack = COLOR_YELLOW;
-                menu.buttonCooldown = 5;
-            }
+        if (knobPressed == RED_PRESSED)
+        {
+            navigationScaleLeft = 3;
         }
-        else {
-            menu.buttonCooldown--;
+
+        if (blueReleased){
+            navigationScaleRight = 2;
+            menu.mainIndex = (menu.mainIndex + 1) % menu.maxMain;
         }
-        */
-	    if(knobPressed == GREEN_PRESSED){
+        if (redReleased){
+            navigationScaleLeft = 2;
+            menu.mainIndex = (menu.mainIndex - 1 + menu.maxMain) % menu.maxMain;
+        }
+
+	    if(greenReleased){
 		    switch(menu.mainIndex){
 			    case 0:
 			        menu.state = STARTED; //Running
 		  	        break;
 			    case 1:
-			        menu.state = SETTINGS;
+			        menu.state = CREDITS;
 			        break;
                 case 2:
+                    menu.ticker = 0;
                     clearScreen();
                     renderScreenData(parlcdMemBase);
                     *rgb_led1 = 0;
@@ -151,26 +186,26 @@ void updateMenu(){
                     exit(0);
                     break;	  
 		    }
-	    }
+        }
+    }
 
-    }
-    /*
-    else if (menu.state == SETTINGS)
-    {
-        menu.ticker++;
-        if (knobPressed == (unsigned char)BLUE_PRESSED)
-        {
-            if (menu.ticker > 4)
-            {
-                
-            }
-        }
-        if (knobPressed == RED_PRESSED)
-        {
-           
+    else if(menu.state == CREDITS){
+        menu.ticker += 4;
+        if(menu.ticker == 800){
+            menu.ticker = 0;
+            menu.state = MENU_BUTTONS;
         }
     }
-    */
+}
+
+void handlePause(int *state){
+    if(redReleased) {
+        *state = MENU;
+        menu.state = MENU_BUTTONS;
+    } 
+    else if (blueReleased) {
+        *state = RUNNING;
+    }
 }
 
 void menuInit(int *st){
@@ -184,7 +219,7 @@ void menuInit(int *st){
     menu.buttonCooldown = 0;
 
     sprintf(menu.mainItems[0],"%s", "START");
-    sprintf(menu.mainItems[1], "%s", "SETTINGS");
+    sprintf(menu.mainItems[1], "%s", "CREDITS");
     sprintf(menu.mainItems[2], "%s", "EXIT");
 
     menu.mainIndex = 0;    
@@ -193,23 +228,7 @@ void menuInit(int *st){
     previousKnobMenu = greenKnob;
     currentKnobMenu = greenKnob;
 
-    // Buttons
-    // 150, 170, 200, 60, COLOR_WHITE
-    //b1 = (button_t){.w = 250, .h = 60, .x = 0, .y = 0, .colorBack = COLOR_YELLOW, .colorText = COLOR_BLACK, .text = "START"};
-    //b2 = (button_t){.w = 250, .h = 60, .x = 0, .y = 0, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "SETTINGS"};
-    //b3 = (button_t){.w = 250, .h = 60, .x = 0, .y = 0, .colorBack = menu.color, .colorText = COLOR_BLACK, .text = "QUIT"};
-
-    //b1.x = SCREEN_WIDTH/2 - b1.w/2;
-    //b1.y = SCREEN_HEIGHT/2;
-
-    //b2.x = SCREEN_WIDTH/2 - b2.w/2;
-    //b2.y = b1.y + b1.h + 20; 
-
-
-    // Menu
-    //mB = (menuButtons_t) {.current = 0, .max = 2, .arr = {b1, b2}};
-}
-
-void settingsInit() {
-    
+    navigationScaleCenter = 2;
+    navigationScaleLeft = 2;
+    navigationScaleRight = 2;
 }

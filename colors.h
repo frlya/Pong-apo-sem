@@ -7,5 +7,7 @@
 #define COLOR_BLUE 0x001F
 #define COLOR_GREEN 0x07E0
 #define COLOR_RED 0xF800
+#define COLOR_CYAN 0x07F
+#define COLOR_MAGENTA 0xF81F
 
 #endif

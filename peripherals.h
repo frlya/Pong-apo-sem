@@ -1,6 +1,7 @@
 #ifndef PERIPHERALS_H
 #define PERIPHERALS_H
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -27,9 +28,14 @@ unsigned int ledCount;
 
 unsigned char knobPressed;
 
+extern bool redReleased;
+extern bool greenReleased;
+extern bool blueReleased;
+
 unsigned char right;
 
 enum knobsPressed {
+    URGENT_EXIT = 7,
     RED_PRESSED = 4,
     GREEN_PRESSED = 2,
     BLUE_PRESSED = 1
@@ -56,5 +62,11 @@ void initSnake();
 void initWinSnakeLED();
 
 void winSnakeLED();
+
+void initWinLights();
+
+void winLights();
+
+void inputHandler();
 
 #endif

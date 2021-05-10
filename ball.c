@@ -115,52 +115,5 @@ char handleCollision(ball_t *ball, pads_t *pads){
             break;
         }
     }
-    /*if((ball->x < PAD_X_OFFSET + PAD_WIDTH - ball->speed * ball->xVel)
-            && (ball->y > pads->p1Pos - BALL_SIZE - ball->speed)
-            && (ball->y < pads->p1Pos + PAD_HEIGHT + BALL_SIZE + ball->speed)){
-        //Ball collides with the left pad
-        ledPulse(0b111,1);
-        ball->x = 2 * (ball->speed + PAD_WIDTH) + ball->speed - ball->x;
-        retValue = V_COLLISION;
-    }
-    else if((ball->x > SCREEN_WIDTH - PAD_X_OFFSET - PAD_WIDTH - BALL_SIZE  + ball->speed * ball->xVel)
-            && (ball->y > pads->p2Pos - BALL_SIZE - ball->speed)
-            && (ball->y < pads->p2Pos + PAD_HEIGHT + BALL_SIZE + ball->speed)){
-        //Ball collides with the right pad
-        ledPulse(0b111, 2);
-        int w = SCREEN_WIDTH - PAD_X_OFFSET - PAD_WIDTH;
-        ball->x = 2 * (w - BALL_SIZE) - ball->speed - ball->x;
-        retValue = V_COLLISION;
-    }
-    else if(ball->x < BALL_SIZE){
-        //Ball reaches the left edge of the screen
-        ledPulse(0b010, 1);
-        return L_EXIT;
-    }
-    else if(ball->x > SCREEN_WIDTH - BALL_SIZE){
-        ledPulse(0b001, 2);
-        //Ball reaches the right edge of the screen
-        return R_EXIT;
-    }
-    if(ball->y < - ball->speed * ball->yVel){
-        //Ball reaches the top of the screen
-        ball->y = ball->speed - ball->y;
-        if(retValue == V_COLLISION){
-            retValue = VH_COLLISION;
-        }
-        else{
-            retValue = H_COLLISION;
-        }
-    }
-    else if(ball->y > SCREEN_HEIGHT - BALL_SIZE + ball->speed * ball->yVel){
-        //Ball reaches the bottom of the screen
-        ball->y = 2 * (SCREEN_HEIGHT - BALL_SIZE) - ball->y;
-        if(retValue == V_COLLISION){
-            retValue = VH_COLLISION;
-        }
-        else{
-            retValue = H_COLLISION;
-        }
-    }*/
     return retValue;
 }
