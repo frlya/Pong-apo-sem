@@ -1,7 +1,7 @@
 # APO_SEM
 
-This program is a semestral project for the computer architectures course on CTU FEI in Prague.
-  GitLab: https://gitlab.fel.cvut.cz/fraloily/apo_sem.
+This program is a semestral project for the computer architectures course on CTU FEI in Prague.\
+GitLab: https://gitlab.fel.cvut.cz/fraloily/apo_sem.
 
 Description
 =============
@@ -25,5 +25,5 @@ Pause and exit:
 
 Additional information
 =============
-runOnDesk.sh script sends files to a remote folder with scp command, then connects to mzAPO through ssh (key is needed), changes directory, compiles and runs binary file.
-  In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute.
+runOnDesk.sh script sends files to a remote folder with scp command, then connects to mzAPO through ssh (key is needed), changes directory, compiles and runs binary file.\
+In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute.
