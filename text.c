@@ -71,16 +71,16 @@ void renderResults()
 			0,
 			COLOR_YELLOW);
 	}
-	
-	char * wph = "PRESS GREEN";
+
+	char *wph = "PRESS GREEN";
 	int wphScale = 2;
-		drawStringToScreen(
-			SCREEN_WIDTH/2 - (stringWidth(wph) * wphScale)/2, 
-			SCREEN_HEIGHT - 10 - CHAR_HEIGHT* wphScale, 
-			wph, 
-			wphScale, 
-			0, 
-			COLOR_GREEN); 
+	drawStringToScreen(
+		SCREEN_WIDTH / 2 - (stringWidth(wph) * wphScale) / 2,
+		SCREEN_HEIGHT - 10 - CHAR_HEIGHT * wphScale,
+		wph,
+		wphScale,
+		0,
+		COLOR_GREEN);
 }
 
 void renderPause()
@@ -93,11 +93,10 @@ void renderPause()
 		question,
 		INFO_TEXT_SCALE,
 		0,
-		COLOR_YELLOW
-	);
+		COLOR_YELLOW);
 
-	drawStringToScreen(0, SCREEN_HEIGHT - CHAR_HEIGHT*NAV_TEXT_SCALE, "YES", NAV_TEXT_SCALE, 0, COLOR_BLUE);
-	drawStringToScreen(SCREEN_WIDTH - stringWidth("NO") * NAV_TEXT_SCALE, SCREEN_HEIGHT - CHAR_HEIGHT*NAV_TEXT_SCALE, "NO", NAV_TEXT_SCALE, 0, COLOR_RED);
+	drawStringToScreen(0, SCREEN_HEIGHT - CHAR_HEIGHT * NAV_TEXT_SCALE, "YES", NAV_TEXT_SCALE, 0, COLOR_BLUE);
+	drawStringToScreen(SCREEN_WIDTH - stringWidth("NO") * NAV_TEXT_SCALE, SCREEN_HEIGHT - CHAR_HEIGHT * NAV_TEXT_SCALE, "NO", NAV_TEXT_SCALE, 0, COLOR_RED);
 }
 
 void renderScore()

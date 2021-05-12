@@ -8,7 +8,8 @@
 
 #include "peripherals.h"
 
-typedef struct {
+typedef struct
+{
     int score;
     bool winner;
     //More data may be added later in development (like pad height)

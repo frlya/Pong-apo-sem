@@ -34,7 +34,8 @@ extern bool blueReleased;
 
 unsigned char right;
 
-enum knobsPressed {
+enum knobsPressed
+{
     URGENT_EXIT = 7,
     RED_PRESSED = 4,
     GREEN_PRESSED = 2,

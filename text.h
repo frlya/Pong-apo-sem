@@ -38,7 +38,7 @@ void drawText(int x, int y, char *text);
 
 void drawChar(int x, int y, char ch, unsigned short color, int scale);
 
-void drawStringToScreen(int x, int y, char* line, int scale, int kerning, unsigned short color);
+void drawStringToScreen(int x, int y, char *line, int scale, int kerning, unsigned short color);
 
 int stringWidth(char *str);
 

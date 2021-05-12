@@ -1,11 +1,12 @@
 #!/bin/bash
 
-scp -i ~/.ssh/mzapo-root-key /Users/frolka666/codes/apo_sem/*.c root@192.168.2.2:~/SEM_AS/apo_sem
-scp -i ~/.ssh/mzapo-root-key /Users/frolka666/codes/apo_sem/*.h root@192.168.2.2:~/SEM_AS/apo_sem   
+scp -i ~/.ssh/mzapo-root-key /path/to/codes/directory/on/local/machine/*.c root@192.168.x.x:~/path/to/remote/folder
 
-ssh -i ~/.ssh/mzapo-root-key root@192.168.2.2 <<END
-cd ~/SEM_AS/apo_sem
+scp -i ~/.ssh/mzapo-root-key /path/to/codes/directory/on/local/machine/*.h root@192.168.x.x:~/path/to/remote/folder   
+
+ssh -i ~/.ssh/mzapo-root-key root@192.168.x.x <<END
+cd ~/path/to/remote/directory
 make
-./pong
+./yourbinary
 END
 echo "DONE"

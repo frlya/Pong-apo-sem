@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "game_controller.h"
 
-void setupScreen() {
+void setupScreen()
+{
 	state = MENU;
 	//Screen data init
 	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(unsigned short));
@@ -35,19 +36,22 @@ void setupScreen() {
 	}
 }
 
-void setupLoop() {
+void setupLoop()
+{
 	//Loop timer setup
 	loopDelay.tv_sec = 0;
 	loopDelay.tv_nsec = 17 * 1000 * 1000;
 }
 
-void setupFont(){
+void setupFont()
+{
 	//Font is added
 	fdes = &font_winFreeSystem14x16;
 	scale = 10;
 }
 
-void setupPeripherials() {
+void setupPeripherials()
+{
 	//Lights init
 	uint8_t *spiled_mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
 	if (spiled_mem_base == NULL)
@@ -61,7 +65,8 @@ void setupPeripherials() {
 	knobs = (volatile uint32_t *)(spiled_mem_base + SPILED_REG_KNOBS_8BIT_o);
 }
 
-void setup(){
+void setup()
+{
 	setupScreen();
 	setupLoop();
 	setupFont();
@@ -70,16 +75,21 @@ void setup(){
 	initPlayers();
 }
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[])
+{
 	setup();
 	printf("Welcome to Pong!\n");
-	while(true){
+	while (true)
+	{
 
 		update(&state);
 		render(&state);
 		inputHandler();
 
-		if(knobPressed == URGENT_EXIT) {exitGame();}
+		if (knobPressed == URGENT_EXIT)
+		{
+			exitGame();
+		}
 		clock_nanosleep(CLOCK_MONOTONIC, 0, &loopDelay, NULL);
 	}
 }

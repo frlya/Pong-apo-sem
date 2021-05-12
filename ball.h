@@ -12,7 +12,8 @@
 #define START_POS_X 240
 #define START_POS_Y 270
 
-typedef struct {
+typedef struct
+{
     int x, y;       // Coordinates of the ball
     int xVel, yVel; // Width and height of the ball
     int speed;

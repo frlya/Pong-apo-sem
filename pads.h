@@ -20,12 +20,13 @@ uint8_t currentKnobP2;
 
 unsigned char padsSpeedScale;
 
-typedef struct{
+typedef struct
+{
     int p1Pos;
     int p2Pos;
     int p1Vel;
     int p2Vel;
-}pads_t;
+} pads_t;
 
 void updatePads(pads_t *pads, int p1Offset, int p2Offset);
 

@@ -23,19 +23,21 @@ unsigned char navigationScaleCenter;
 #define MENU_TEXT_CREDITS 5
 #define MENU_TEXT_SPACE 20
 
-	enum menuStates {
-		BEGIN = 1111,
-		PONG_HEADER_DONE,
-		MENU_BUTTONS,
-		STARTED,
-		CREDITS
-	};
+enum menuStates
+{
+	BEGIN = 1111,
+	PONG_HEADER_DONE,
+	MENU_BUTTONS,
+	STARTED,
+	CREDITS
+};
 
-typedef struct {
+typedef struct
+{
 	unsigned char buttonCooldown;
 	unsigned int ticker;
-    char titleState;
-    int state;
+	char titleState;
+	int state;
 	int pongTextShift;
 	unsigned short color;
 	int mainIndex;

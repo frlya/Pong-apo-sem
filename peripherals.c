@@ -11,7 +11,7 @@ u_int8_t redKnob;
 u_int8_t greenKnob;
 u_int8_t blueKnob;
 
- uint8_t ledCounter;
+uint8_t ledCounter;
 uint8_t baseColor;
 uint8_t currentLed;
 
@@ -29,7 +29,8 @@ void ledPulse(uint8_t color, uint8_t led)
 	baseColor = color;
 }
 
-void inputHandler(){
+void inputHandler()
+{
 	char redPressed = knobPressed & 0b100;
 	char greenPressed = knobPressed & 0b010;
 	char bluePressed = knobPressed & 0b001;
@@ -43,55 +44,69 @@ void inputHandler(){
 	greenKnob = (*knobs >> 8) & 0xFF;
 	blueKnob = *knobs & 0xFF;
 
-	if (redPressed - (knobPressed & 0b100) == 0b100) redReleased = true;
-	if (greenPressed - (knobPressed & 0b010) == 0b010) greenReleased = true;
-	if (bluePressed - (knobPressed & 0b001) == 0b001) blueReleased = true;
+	if (redPressed - (knobPressed & 0b100) == 0b100)
+		redReleased = true;
+	if (greenPressed - (knobPressed & 0b010) == 0b010)
+		greenReleased = true;
+	if (bluePressed - (knobPressed & 0b001) == 0b001)
+		blueReleased = true;
 }
 
 int getPlayerOffset(int player)
 {
 	int returnVal = 0;
-    //WIP
-    return returnVal;
+	//WIP
+	return returnVal;
 }
 
 /*
 *   Draws single pixel
 *   Service finction
 */
-void draw_pixel(int x, int y, unsigned short color){
-	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT){
+void draw_pixel(int x, int y, unsigned short color)
+{
+	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
+	{
 		fb[x + SCREEN_WIDTH * y] = color;
 	}
 }
 
-void clearScreen(){
-	for(int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++){
+void clearScreen()
+{
+	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+	{
 		fb[i] = COLOR_BLACK;
 	}
 }
 
-void renderScreenData(unsigned char *parlcdMemBase){
+void renderScreenData(unsigned char *parlcdMemBase)
+{
 	parlcd_write_cmd(parlcdMemBase, 0x2c);
-	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++){
+	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+	{
 		parlcd_write_data(parlcdMemBase, fb[i]);
 	}
 }
 
-void fillRect(int x, int y, int width, int height, unsigned short color){
-	for(int i = 0; i < width; i++){
-		for(int j = 0; j < height; j++){
+void fillRect(int x, int y, int width, int height, unsigned short color)
+{
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+		{
 			draw_pixel(x + i, y + j, color);
 		}
 	}
 }
 
-void updateLed() {
+void updateLed()
+{
 	uint8_t R = ((baseColor >> 2) * ledCounter);
-	uint8_t G =	((baseColor >> 1)%2) * ledCounter;
+	uint8_t G = ((baseColor >> 1) % 2) * ledCounter;
 	uint8_t B = (baseColor % 2) * ledCounter;
 
-	if(ledCounter != 0){
+	if (ledCounter != 0)
+	{
 		ledCounter -= 15;
 	}
 
@@ -142,25 +157,30 @@ void snakeLED()
 	ledCount++;
 }
 
-void initWinSnakeLED() {
+void initWinSnakeLED()
+{
 	*led_line = 0x00018000;
 	ledCount = 0;
 }
 
-void winSnakeLED() {
-	if(ledCount % 1000) {
+void winSnakeLED()
+{
+	if (ledCount % 1000)
+	{
 		unsigned int tmpLF;
 		unsigned int tmpRT;
-		if(*led_line == 0xFFFFFFFF) {
+		if (*led_line == 0xFFFFFFFF)
+		{
 			*led_line = 0x00018000;
-		} else {
+		}
+		else
+		{
 			tmpLF = *led_line;
 			tmpRT = *led_line;
 			tmpLF <<= 1;
 			tmpRT >>= 1;
-			*led_line = *led_line | tmpLF | tmpRT ;
+			*led_line = *led_line | tmpLF | tmpRT;
 		}
 	}
 	ledCount++;
 }
-
