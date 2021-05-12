@@ -1,7 +1,7 @@
 # APO_SEM
 
 This program is a semestral project for the computer architectures course on CTU FEI in Prague.
-GitLab: https://gitlab.fel.cvut.cz/fraloily/apo_sem
+  GitLab: https://gitlab.fel.cvut.cz/fraloily/apo_sem.
 
 Description
 =============
@@ -14,16 +14,16 @@ The game is designed for two players playing the game simultaneously. The game a
 Manual
 =============
 Navigation:
-    Navigate to the right: press blue knob.
-    Navigate to the left: press right knob.
-    Select option: press green knob.
+  * Navigate to the right: press blue knob.
+  * Navigate to the left: press right knob.
+  * Select option: press green knob.
 
 Pause and exit:
-    Pause the game: press green knob while the game is running.
-    Emergency exit: press all 3 knobs at the same time.
+  * Pause the game: press green knob while the game is running.
+  * Emergency exit: press all 3 knobs at the same time.
 
 
 Additional information
 =============
 runOnDesk.sh script sends files to a remote folder with scp command, then connects to mzAPO through ssh (key is needed), changes directory, compiles and runs binary file.
-In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute.
+  In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute.
