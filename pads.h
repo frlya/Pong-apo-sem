@@ -20,8 +20,7 @@ extern uint8_t currentKnobP2;
 
 extern uint8_t padsSpeedScale;
 
-typedef struct
-{
+typedef struct {
     int p1Pos;
     int p2Pos;
     int p1Vel;

@@ -9,9 +9,9 @@
 #define COUNTDOWN_PERIOD 60
 
 #include "font_types.h"
+#include "games_states.h"
 #include "peripherals.h"
 #include "player_data.h"
-#include "games_states.h"
 
 extern font_descriptor_t *fdes; //  Pointer to a font descriptor from font_...c
 
@@ -38,7 +38,8 @@ void drawText(int x, int y, char *text);
 
 void drawChar(int x, int y, char ch, uint16_t color, int scale);
 
-void drawStringToScreen(int x, int y, char *line, int scale, int kerning, uint16_t color);
+void drawStringToScreen(int x, int y, char *line, int scale, int kerning,
+                        uint16_t color);
 
 int stringWidth(char *str);
 

@@ -2,18 +2,18 @@
 #define PERIPHERALS_H
 
 #include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "colors.h"
 #include "dimensions.h"
+#include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-#include "mzapo_parlcd.h"
 
 extern uint16_t *fb;
-extern uint8_t *parlcdMemBase; // Screen
-extern volatile uint32_t *led_line;  // Led line
+extern uint8_t *parlcdMemBase;      // Screen
+extern volatile uint32_t *led_line; // Led line
 extern volatile uint32_t *rgb_led1; // RGBs
 extern volatile uint32_t *rgb_led2; //
 extern volatile uint32_t *knobs;    // Knobs
@@ -34,8 +34,7 @@ extern bool blueReleased;
 
 extern uint8_t right;
 
-enum knobsPressed
-{
+enum knobsPressed {
     URGENT_EXIT = 7,
     RED_PRESSED = 4,
     GREEN_PRESSED = 2,
