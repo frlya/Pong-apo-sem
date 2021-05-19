@@ -27,11 +27,11 @@
 extern pads_t pads;
 extern ball_t ball;
 
-int state;
-bool stateSwitch;
-int scale;
+extern int state;
+extern bool stateSwitch;
+extern int scale;
 
-struct timespec loopDelay;
+extern struct timespec loopDelay;
 
 void update(int *state);
 void render(int *state);

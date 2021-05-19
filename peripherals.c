@@ -1,22 +1,22 @@
 #include "peripherals.h"
 
-unsigned short *fb;
-unsigned char *parlcdMemBase;
+uint16_t *fb;
+uint8_t *parlcdMemBase;
 volatile uint32_t *led_line;
 volatile u_int32_t *rgb_led1;
 volatile u_int32_t *rgb_led2;
 volatile u_int32_t *knobs;
-unsigned char knobPressed;
-u_int8_t redKnob;
-u_int8_t greenKnob;
-u_int8_t blueKnob;
+uint8_t knobPressed;
+uint8_t redKnob;
+uint8_t greenKnob;
+uint8_t blueKnob;
 
 uint8_t ledCounter;
 uint8_t baseColor;
 uint8_t currentLed;
 
-unsigned char right;
-unsigned int ledCount;
+uint8_t right;
+uint32_t ledCount;
 
 bool redReleased;
 bool greenReleased;

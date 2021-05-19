@@ -10,9 +10,9 @@ int *state_c;
 uint8_t previousKnobMenu;
 uint8_t currentKnobMenu;
 
-unsigned char navigationScaleLeft;
-unsigned char navigationScaleRight;
-unsigned char navigationScaleCenter;
+uint8_t navigationScaleLeft;
+uint8_t navigationScaleRight;
+uint8_t navigationScaleCenter;
 
 void pongText()
 {

@@ -12,13 +12,13 @@
 #define L_EXIT 104
 #define R_EXIT 105
 
-uint8_t previousKnobP1;
-uint8_t currentKnobP1;
+extern uint8_t previousKnobP1;
+extern uint8_t currentKnobP1;
 
-uint8_t previousKnobP2;
-uint8_t currentKnobP2;
+extern uint8_t previousKnobP2;
+extern uint8_t currentKnobP2;
 
-unsigned char padsSpeedScale;
+extern uint8_t padsSpeedScale;
 
 typedef struct
 {

@@ -9,11 +9,11 @@
 #include "colors.h"
 #include "text.h"
 
-uint8_t previousKnobMenu;
-uint8_t currentKnobMenu;
-unsigned char navigationScaleLeft;
-unsigned char navigationScaleRight;
-unsigned char navigationScaleCenter;
+extern uint8_t previousKnobMenu;
+extern uint8_t currentKnobMenu;
+extern uint8_t navigationScaleLeft;
+extern uint8_t navigationScaleRight;
+extern uint8_t navigationScaleCenter;
 
 #define PONG_TEXT_SCALE 10
 #define PONG_TEXT_ANIMATION_SPEED 8

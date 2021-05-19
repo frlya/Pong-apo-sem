@@ -6,7 +6,7 @@ CFLAGS =-g -std=gnu99 -O1 -Wall
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 
-SOURCES = ball.c pads.c peripherals.c player_data.c menu.c main.c mzapo_phys.c mzapo_parlcd.c
+SOURCES = ball.c pads.c peripherals.c player_data.c menu.c game_controller.c main.c mzapo_phys.c mzapo_parlcd.c
 SOURCES += font_prop14x16.c font_rom8x16.c text.c
 TARGET_EXE = pong
 #TARGET_IP ?= 192.168.202.207
@@ -14,7 +14,7 @@ ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.xxx make run" or modify Makefile)
-TARGET_IP ?= 192.168.202.207
+TARGET_IP ?= 192.168.202.204
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
@@ -22,7 +22,7 @@ TARGET_USER ?= root
 # for use from Eduroam network use TARGET_IP=localhost and enable next line
 #SSH_OPTIONS=-o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "Port=2222"
 #SSH_OPTIONS=-i /opt/zynq/ssh-connect/mzapo-root-key
-SSH_OPTIONS=-o 'ProxyJump=username@postel.felk.cvut.cz'
+SSH_OPTIONS=-o 'ProxyJump=sakarjak@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
 OBJECTS += $(filter %.o,$(SOURCES:%.cpp=%.o))

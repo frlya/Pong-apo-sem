@@ -11,28 +11,28 @@
 #include "mzapo_regs.h"
 #include "mzapo_parlcd.h"
 
-extern unsigned short *fb;
-unsigned char *parlcdMemBase; // Screen
-volatile uint32_t *led_line;  // Led line
-volatile u_int32_t *rgb_led1; // RGBs
-volatile u_int32_t *rgb_led2; //
-volatile u_int32_t *knobs;    // Knobs
-u_int8_t redKnob;
-u_int8_t greenKnob;
-u_int8_t blueKnob;
+extern uint16_t *fb;
+extern uint8_t *parlcdMemBase; // Screen
+extern volatile uint32_t *led_line;  // Led line
+extern volatile uint32_t *rgb_led1; // RGBs
+extern volatile uint32_t *rgb_led2; //
+extern volatile uint32_t *knobs;    // Knobs
+extern u_int8_t redKnob;
+extern u_int8_t greenKnob;
+extern u_int8_t blueKnob;
 
 extern uint8_t ledCounter;
 extern uint8_t baseColor;
 extern uint8_t currentLed;
-unsigned int ledCount;
+extern uint32_t ledCount;
 
-unsigned char knobPressed;
+extern uint8_t knobPressed;
 
 extern bool redReleased;
 extern bool greenReleased;
 extern bool blueReleased;
 
-unsigned char right;
+extern uint8_t right;
 
 enum knobsPressed
 {
