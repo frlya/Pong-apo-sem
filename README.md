@@ -26,4 +26,5 @@ Pause and exit:
 Additional information
 =============
 runOnDesk.sh script sends files to a remote folder with scp command, then connects to mzAPO through ssh (key is needed), changes directory, compiles and runs binary file.\
-In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute.
+In order to use the script you need to change paths to directories, IP addresses and name of the binary file to execute. Running the script without editing will not work.
+If you want to use makefile which compiles the code through the postel.felk.cvut.cz server, you need to edit your username inside of the makefile (line 25).

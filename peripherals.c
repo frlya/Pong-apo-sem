@@ -63,7 +63,7 @@ int getPlayerOffset(int player)
 *   Draws single pixel
 *   Service finction
 */
-void draw_pixel(int x, int y, unsigned short color)
+void draw_pixel(int x, int y, uint16_t color)
 {
 	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 	{
@@ -79,7 +79,7 @@ void clearScreen()
 	}
 }
 
-void renderScreenData(unsigned char *parlcdMemBase)
+void renderScreenData(uint8_t *parlcdMemBase)
 {
 	parlcd_write_cmd(parlcdMemBase, 0x2c);
 	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
@@ -88,7 +88,7 @@ void renderScreenData(unsigned char *parlcdMemBase)
 	}
 }
 
-void fillRect(int x, int y, int width, int height, unsigned short color)
+void fillRect(int x, int y, int width, int height, uint16_t color)
 {
 	for (int i = 0; i < width; i++)
 	{
@@ -167,8 +167,8 @@ void winSnakeLED()
 {
 	if (ledCount % 1000)
 	{
-		unsigned int tmpLF;
-		unsigned int tmpRT;
+		uint32_t tmpLF;
+		uint32_t tmpRT;
 		if (*led_line == 0xFFFFFFFF)
 		{
 			*led_line = 0x00018000;

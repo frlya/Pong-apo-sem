@@ -32,13 +32,13 @@ void renderCountdown();
 
 int charWidth(int ch);
 
-void drawPixelBig(int x, int y, unsigned short color, int scale);
+void drawPixelBig(int x, int y, uint16_t color, int scale);
 
 void drawText(int x, int y, char *text);
 
-void drawChar(int x, int y, char ch, unsigned short color, int scale);
+void drawChar(int x, int y, char ch, uint16_t color, int scale);
 
-void drawStringToScreen(int x, int y, char *line, int scale, int kerning, unsigned short color);
+void drawStringToScreen(int x, int y, char *line, int scale, int kerning, uint16_t color);
 
 int stringWidth(char *str);
 

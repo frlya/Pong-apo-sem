@@ -157,7 +157,7 @@ int stringWidth(char *str)
 *   Adjusts scale of character.
 *   Service function
 */
-void drawPixelBig(int x, int y, unsigned short color, int scale)
+void drawPixelBig(int x, int y, uint16_t color, int scale)
 {
 	int i, j;
 	for (i = 0; i < scale; i++)
@@ -174,9 +174,9 @@ void drawPixelBig(int x, int y, unsigned short color, int scale)
  *
  *  int x, y             - coordinates of left upper corner of char box.
  *  char ch              - character or its code from font table
- *  unsigned short color - color of the char      
+ *  uint16_t color - color of the char      
  */
-void drawChar(int x, int y, char ch, unsigned short color, int scale)
+void drawChar(int x, int y, char ch, uint16_t color, int scale)
 {
 	int w = charWidth(ch);
 	const font_bits_t *ptr;
@@ -214,11 +214,10 @@ void drawChar(int x, int y, char ch, unsigned short color, int scale)
 // scale 		- well... just scale.
 // int kerning  - space between two latters.
 
-void drawStringToScreen(int x, int y, char *line, int scale, int kerning, unsigned short color)
+void drawStringToScreen(int x, int y, char *line, int scale, int kerning, uint16_t color)
 {
 	int concatinated = 0;
-	while (*line != '\0')
-	{
+	while (*line != '\0'){
 		drawChar(x + (concatinated), y, *(line), color, scale);
 		concatinated += (charWidth(*(line)) + kerning) * scale;
 		line++;

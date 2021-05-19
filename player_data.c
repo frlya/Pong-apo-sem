@@ -3,8 +3,7 @@
 player_t player1;
 player_t player2;
 
-void initPlayers()
-{
+void initPlayers(){
     //Player1 init
     player1.score = 0;
     player1.winner = false;
@@ -16,42 +15,34 @@ void initPlayers()
 
 bool updateScore(int player, int value)
 {
-    unsigned int tmpInt;
-    unsigned short tmpShort;
-    if (player == 1)
-    {
+    uint32_t tmpInt;
+    uint16_t tmpShort;
+    if (player == 1){
         player1.score = (player1.score + 1) * value;
-        if (player1.score == 1)
-        {
+        if (player1.score == 1){
             tmpInt = 0x80000000;
             *led_line |= tmpInt;
         }
-        else
-        {
+        else{
             tmpInt = *led_line;
             tmpInt >>= 1;
             *led_line |= tmpInt;
         }
-        if (player1.score == 16)
-            player1.winner = true;
+        if (player1.score == 16) player1.winner = true;
         return true;
     }
-    else if (player == 2)
-    {
+    else if (player == 2){
         player2.score = (player2.score + 1) * value;
-        if (player2.score == 1)
-        {
+        if (player2.score == 1){
             tmpShort = 0x1;
             *led_line |= tmpShort;
         }
-        else
-        {
+        else{
             tmpShort = *led_line;
             tmpShort <<= 1;
             *led_line |= tmpShort;
         }
-        if (player2.score == 16)
-            player2.winner = true;
+        if (player2.score == 16) player2.winner = true;
         return true;
     }
     return false;

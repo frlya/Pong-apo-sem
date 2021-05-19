@@ -34,12 +34,12 @@ enum menuStates
 
 typedef struct
 {
-	unsigned char buttonCooldown;
-	unsigned int ticker;
+	uint8_t buttonCooldown;
+	uint32_t ticker;
 	char titleState;
 	int state;
 	int pongTextShift;
-	unsigned short color;
+	uint16_t color;
 	int mainIndex;
 	char mainItems[3][14];
 	int maxMain;

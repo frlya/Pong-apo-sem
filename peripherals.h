@@ -48,13 +48,13 @@ void updateLed();
 
 int getPlayerOffset(int player);
 
-void draw_pixel(int x, int y, unsigned short color);
+void draw_pixel(int x, int y, uint16_t color);
 
 void clearScreen();
 
-void renderScreenData(unsigned char *parlcdMemBase);
+void renderScreenData(uint8_t *parlcdMemBase);
 
-void fillRect(int x, int y, int width, int height, unsigned short color);
+void fillRect(int x, int y, int width, int height, uint16_t color);
 
 void snakeLED();
 

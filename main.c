@@ -7,7 +7,7 @@ void setupScreen()
 {
 	state = MENU;
 	//Screen data init
-	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(unsigned short));
+	fb = malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(uint16_t));
 	if (fb == NULL)
 	{
 		exit(-1);
@@ -24,7 +24,7 @@ void setupScreen()
 	//Clear the screen
 	parlcd_write_cmd(parlcdMemBase, 0x2c);
 	int ptr = 0;
-	unsigned int c;
+	uint32_t c;
 	for (int i = 0; i < SCREEN_HEIGHT; i++)
 	{
 		for (int j = 0; j < SCREEN_WIDTH; j++)
